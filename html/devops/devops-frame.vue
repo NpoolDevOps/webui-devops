@@ -1,5 +1,5 @@
 <template>
-  <el-table border strip :data="devices">
+  <el-table border stripe :data="devices">
     <el-table-column prop="role" label="角色"></el-table-column>
     <el-table-column prop="sub_role" label="子角色"></el-table-column>
     <el-table-column prop="owner" label="所有者"></el-table-column>
