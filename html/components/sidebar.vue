@@ -2,38 +2,37 @@
   <div>
     <el-menu
       class="el-menu-vertical"
-      default-active="1-4-1"
+      default-active="1-1-1"
       :collapse="collapsed"
+      @select="onMenuSelected"
     >
-      <el-submenu index="1">
+      <el-submenu
+        v-for="(submenu1, index1) in menus"
+        :key="index1"
+        :index="index1"
+      >
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">导航一</span>
+          <i :class="submenu1.icon"></i>
+          <span slot="title">{{ submenu1.title }}</span>
         </template>
-        <el-menu-item-group>
-          <span slot="title">分组一</span>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <span slot="title">选项4</span>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
+        <el-submenu
+          v-for="(submenu2, index2) in submenu1.submenus"
+          :key="index2"
+          :index="index1 + '-' + index2"
+        >
+          <span slot="title">{{ submenu2.title }}</span>
+          <el-menu-item
+            v-for="(submenu3, index3) in submenu2.submenus"
+            :key="index3"
+            :index="index1 + '-' + index2 + '-' + index3"
+          >
+            {{ submenu3.title }}
+          </el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+      <el-menu-item>
+         <i class="el-icon-location"></i>
+        <span slot="title">設置</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -43,7 +42,40 @@ module.exports = {
   props: {
     collapsed: {
       default: false,
+    },
+    menus: {
+      default: [
+        { 
+          title: "導航一", icon: "el-icon-location",
+          submenus: [
+            { 
+              title: "分組一",
+              submenus: [
+                { title: "選項一" },
+                { title: "選項二" },
+                { title: "選項三" }
+              ]
+            }
+          ]
+        }, {
+          title: "導航二", icon: "el-icon-location",
+          submenus: [
+            {
+              title: "分組一",
+              submenus: [
+                { title: "選項一" },
+                { title: "選項二" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  methods: {
+    onMenuSelected: function(menu) {
+      console.log(menu)
     }
   }
-};
+}
 </script>
