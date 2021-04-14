@@ -2,7 +2,11 @@
     <div class="header-color">
         <el-row>
             <el-col class="header-icon header-line-height">
-                <el-icon :class="headerBreadIcon"></el-icon>
+                <el-button
+                    class="header-icon"
+                    :icon="headerBreadIcon"
+                    @click="onHeaderIconClick">
+                </el-button>
             </el-col>
             <el-col class="header-nav" :span="10">
                 <el-breadcrumb>
@@ -25,7 +29,7 @@ module.exports = {
     props: {
         headerBreadIcon: {
             type: String,
-            default: 'el-icon-help',
+            default: 'el-icon-back',
         },
         paths: {
             default: [
@@ -40,21 +44,37 @@ module.exports = {
                     path: '/devops/detail',
                 }
             ],
+        },
+        collpased: false,
+    },
+    methods: {
+        onHeaderIconClick: function() {
+            this.$emit('on-header-icon-click')
+            this.collpased = !this.collpased
+        }
+    },
+    watch: {
+        collpased: function() {
+            this.headerBreadIcon =
+                this.collpased ?
+                'el-icon-right' :
+                'el-icon-back'
         }
     }
 }
 </script>
 <style scoped>
 .header-line-height {
-    line-height: 25px;
+    line-height: 40px;
 }
 .header-color {
     background-color: transparent;
 }
 .header-icon {
-    width: 25px;    
-    height: 25px;
-    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    padding: 0;
 }
 .header-nav {
     background-color: transparent;

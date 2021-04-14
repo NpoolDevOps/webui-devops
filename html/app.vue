@@ -5,7 +5,7 @@
                 <mysidebar></mysidebar>
             </el-col>
             <el-col :span="22">
-                <myheader></myheader>
+                <myheader @on-header-icon-click="onHeaderIconClick"></myheader>
                 <router-view></router-view>
             </el-col>
         </el-row>
@@ -16,6 +16,10 @@ module.exports = {
     components: {
         'mysidebar': httpVueLoader('components/sidebar.vue'),
         'myheader': httpVueLoader('components/header.vue'),
+    },
+    methods: {
+        onHeaderIconClick: function() {
+        }
     }
 }
 </script>
