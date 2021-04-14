@@ -5,4 +5,4 @@ const routes = [
 const router = new VueRouter({
     routes: routes
 })
-export {router}
+export { router }

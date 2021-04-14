@@ -1,4 +1,5 @@
-import {router} from './router.js'
+import { router } from './router.js'
+
 new Vue({
     el: "#app",
     router,
@@ -6,4 +7,3 @@ new Vue({
         'app': httpVueLoader('app.vue')
     }
 })
-    

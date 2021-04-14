@@ -38,8 +38,6 @@
   </div>
 </template>
 <script>
-const MenuClassDevops = 'devops'
-
 module.exports = {
   props: {
     collapsed: {
@@ -48,7 +46,7 @@ module.exports = {
     menus: {
       default: [
         { 
-          title: '運維控制檯', icon: 'el-icon-location', path: '/', class: MenuClassDevops,
+          title: '運維控制檯', icon: 'el-icon-location', path: '/', clazz: constants.MenuClassDevops,
           submenus: [
             { 
               title: '礦工列表', path: '/group',
@@ -111,6 +109,8 @@ module.exports = {
         items: items
       })
     }
+  },
+  mounted() {
   }
 }
 </script>

@@ -113,7 +113,10 @@ module.exports = {
           path: '/device',
           patam: device,
         })
-        this.$emit('on-menu-item-updated', menu)
+        this.$emit('on-menu-item-updated', {
+          class: constants.MenuClassDevops,
+          menu: menu,
+        })
       })
     }
   },
