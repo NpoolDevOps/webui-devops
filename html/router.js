@@ -1,6 +1,6 @@
-const devopsMain = httpVueLoader('main/devops-main.vue')
+const devops = httpVueLoader('main/devops.vue')
 const routes = [
-    {path: '/', component: devopsMain},
+    {path: '/', component: devops},
 ]
 const router = new VueRouter({
     routes: routes
