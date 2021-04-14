@@ -2,12 +2,16 @@
     <div class="app-main">
         <el-row type="flex">
             <el-col>
-                <mysidebar :collapsed="sidebarCollapsed"></mysidebar>
+                <mysidebar
+                    :collapsed="sidebarCollapsed"
+                    @on-menu-switched="onMenuSwitched">
+                </mysidebar>
             </el-col>
             <el-col>
                 <myheader
                     @on-header-icon-click="onHeaderIconClick"
-                    :collapsed="sidebarCollapsed">
+                    :collapsed="sidebarCollapsed"
+                    :parameter="menuParam">
                 </myheader>
                 <router-view></router-view>
             </el-col>
@@ -23,11 +27,15 @@ module.exports = {
     data() {
         return {
             sidebarCollapsed: false,
+            menuParam: {},
         }
     },
     methods: {
         onHeaderIconClick: function() {
             this.sidebarCollapsed = !this.sidebarCollapsed
+        },
+        onMenuSwitched: function(param) {
+            this.menuParam = param
         }
     }
 }

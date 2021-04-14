@@ -12,7 +12,7 @@
                 <el-breadcrumb>
                     <el-breadcrumb-item
                         class="header-line-height"
-                        v-for="(item, index) in paths"
+                        v-for="(item, index) in parameter.items"
                         :key="index"
                         :to="{path: item.path}">
                         {{ item.title }}
@@ -31,35 +31,29 @@ module.exports = {
             type: String,
             default: 'el-icon-back',
         },
-        paths: {
-            default: [
-                {
-                    title: '主頁',
-                    path: '/',
-                }, {
-                    title: '運維控制檯',
-                    path: '/devops',
-                }, {
-                    title: '192.168.50.112',
-                    path: '/devops/detail',
-                }
-            ],
-        },
         collpased: {
             default: false,
         },
+        parameter: {
+            default: {
+                items: [],
+            },
+        }
     },
     methods: {
         onHeaderIconClick: function() {
             this.$emit('on-header-icon-click')
             this.collpased = !this.collpased
+        },
+        onMenuSwitched: function(param) {
+            console.log(param)
         }
     },
     computed: {
         headerBreadIcon: function() {
             return this.collpased ? 'el-icon-right' : 'el-icon-back'
         }
-    }
+    },
 }
 </script>
 <style scoped>
