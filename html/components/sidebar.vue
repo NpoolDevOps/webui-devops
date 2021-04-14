@@ -82,6 +82,5 @@ module.exports = {
 <style scoped>
   .el-menu-vertical:not(.el-menu--collapse) {
     width: 200px;
-    min-height: 400px;
   }
 </style>
