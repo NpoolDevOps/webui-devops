@@ -49,12 +49,8 @@ module.exports = {
           title: '運維控制檯', icon: 'el-icon-location', path: '/', clazz: constants.MenuClassDevops,
           submenus: [
             { 
-              title: '礦工列表', path: '/group',
-              submenus: [
-                { title: '選項一', path: '/group/item' },
-                { title: '選項二', path: '/group/item' },
-                { title: '選項三', path: '/group/item' }
-              ]
+              title: '礦工列表', path: '/group', clazz: constants.MenuSubClassDeviceList,
+              submenus: [],
             }
           ]
         }, {
@@ -75,7 +71,7 @@ module.exports = {
   data() {
     return {
       indexSeparator: '-',
-      defaultActiveMenuIndex: '0-0-0',
+      defaultActiveMenuIndex: '0',
     }
   },
   methods: {
@@ -106,10 +102,25 @@ module.exports = {
           param: menu.param,
         })
       }
-      this.$emit("on-menu-switched", {
+      this.$emit('on-menu-switched', {
         items: items
       })
+    },
+    onMenuItemUpdated: function(menu) {
+      for (let i = 0; i < this.menus.length; i++) {
+        if (menu.clazz == this.menus[i].clazz) {
+          for (let k = 0; k < this.menus[i].submenus.length; k++) {
+            if (menu.subclazz == this.menus[i].submenus[k].clazz) {
+              this.menus[i].submenus = menu.submenus
+              return
+            }
+          }
+        }
+      }
     }
+  },
+  created() {
+    constants.EventBus.$on('on-menu-item-updated', this.onMenuItemUpdated)
   },
   mounted() {
     this.onMenuSelected(this.defaultActiveMenuIndex)

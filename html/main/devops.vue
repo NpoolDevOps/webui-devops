@@ -51,11 +51,11 @@ module.exports = {
     };
   },
   created: function () {
-    this.$on('get_my_devices', this.getMyDevices);
+    this.$on('get_my_devices', this.getMyDevices)
     this.$on('update_menu', this.updateMenu)
   },
   mounted: function () {
-    this.$emit('get_my_devices');
+    this.$emit('get_my_devices')
   },
   methods: {
     getMyDevices: function () {
@@ -114,8 +114,9 @@ module.exports = {
           path: '/device',
           patam: device,
         })
-        this.$emit('on-menu-item-updated', {
-          class: constants.MenuClassDevops,
+        constants.EventBus.$emit('on-menu-item-updated', {
+          clazz: constants.MenuClassDevops,
+          subclazz: constants.MenuSubClassDeviceList,
           menu: menu,
         })
       })

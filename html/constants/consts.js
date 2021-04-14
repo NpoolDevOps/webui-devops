@@ -1,3 +1,5 @@
 const constants = new Object({
-    MenuClassDevops: 'devops'
+    MenuClassDevops: 'devops',
+    MenuSubClassDeviceList: 'devicelist',
+    EventBus: new Vue(),
 })
