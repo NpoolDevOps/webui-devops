@@ -52,7 +52,7 @@ module.exports = {
   },
   created: function () {
     this.$on('get_my_devices', this.getMyDevices);
-    this.$on('update_menus', this.updateMenu)
+    this.$on('update_menu', this.updateMenu)
   },
   mounted: function () {
     this.$emit('get_my_devices');
@@ -91,6 +91,7 @@ module.exports = {
           }
 
           self.devices = resp.body.devices;
+          this.$emit("update_menu")
         })
         .catch(function (error) {
           ELEMENT.Notification({
