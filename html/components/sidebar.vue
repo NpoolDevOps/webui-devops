@@ -2,7 +2,7 @@
   <div>
     <el-menu
       class="el-menu-vertical"
-      default-active="0-0-0"
+      :default-active="defaultActiveMenuIndex"
       :collapse="collapsed"
       @select="onMenuSelected"
     >
@@ -75,6 +75,7 @@ module.exports = {
   data() {
     return {
       indexSeparator: '-',
+      defaultActiveMenuIndex: '0-0-0',
     }
   },
   methods: {
@@ -111,6 +112,7 @@ module.exports = {
     }
   },
   mounted() {
+    this.onMenuSelected(this.defaultActiveMenuIndex)
   }
 }
 </script>
