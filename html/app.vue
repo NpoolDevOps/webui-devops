@@ -2,7 +2,7 @@
     <div class="app-main">
         <el-row>
             <el-col :span="2">
-                <mysidebar></mysidebar>
+                <mysidebar ref="mySidebar" :collapsed="sidebarCollapsed"></mysidebar>
             </el-col>
             <el-col :span="22">
                 <myheader @on-header-icon-click="onHeaderIconClick"></myheader>
@@ -17,8 +17,14 @@ module.exports = {
         'mysidebar': httpVueLoader('components/sidebar.vue'),
         'myheader': httpVueLoader('components/header.vue'),
     },
+    data() {
+        return {
+            sidebarCollapsed: false,
+        }
+    },
     methods: {
         onHeaderIconClick: function() {
+            this.sidebarCollapsed = !this.sidebarCollapsed
         }
     }
 }
