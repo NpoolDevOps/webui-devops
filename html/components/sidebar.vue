@@ -112,7 +112,7 @@ module.exports = {
         if (menu.clazz == myMenus[i].clazz) {
           for (let k = 0; k < myMenus[i].submenus.length; k++) {
             if (menu.subclazz == myMenus[i].submenus[k].clazz) {
-              myMenus[i].submenus[k].submenus = menu.submenus
+              myMenus[i].submenus[k].submenus = menu.menu.submenus
               this.menus = myMenus
               return
             }
