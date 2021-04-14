@@ -107,11 +107,13 @@ module.exports = {
       })
     },
     onMenuItemUpdated: function(menu) {
-      for (let i = 0; i < this.menus.length; i++) {
-        if (menu.clazz == this.menus[i].clazz) {
-          for (let k = 0; k < this.menus[i].submenus.length; k++) {
-            if (menu.subclazz == this.menus[i].submenus[k].clazz) {
-              this.menus[i].submenus = menu.submenus
+      var myMenus = this.menus
+      for (let i = 0; i < myMenus.length; i++) {
+        if (menu.clazz == myMenus[i].clazz) {
+          for (let k = 0; k < myMenus[i].submenus.length; k++) {
+            if (menu.subclazz == myMenus[i].submenus[k].clazz) {
+              myMenus[i].submenus[k].submenus = menu.submenus
+              this.menus = myMenus
               return
             }
           }
@@ -124,6 +126,9 @@ module.exports = {
   },
   mounted() {
     this.onMenuSelected(this.defaultActiveMenuIndex)
+  },
+  beforeDestroy() {
+    constants.EventBus.$off('on-menu-item-updated')
   }
 }
 </script>
