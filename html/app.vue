@@ -2,10 +2,13 @@
     <div class="app-main">
         <el-row type="flex">
             <el-col>
-                <mysidebar ref="mySidebar" :collapsed="sidebarCollapsed"></mysidebar>
+                <mysidebar :collapsed="sidebarCollapsed"></mysidebar>
             </el-col>
             <el-col>
-                <myheader @on-header-icon-click="onHeaderIconClick"></myheader>
+                <myheader
+                    @on-header-icon-click="onHeaderIconClick"
+                    :collapsed="sidebarCollapsed">
+                </myheader>
                 <router-view></router-view>
             </el-col>
         </el-row>

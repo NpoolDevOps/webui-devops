@@ -45,7 +45,9 @@ module.exports = {
                 }
             ],
         },
-        collpased: false,
+        collpased: {
+            default: false,
+        },
     },
     methods: {
         onHeaderIconClick: function() {
@@ -53,12 +55,9 @@ module.exports = {
             this.collpased = !this.collpased
         }
     },
-    watch: {
-        collpased: function() {
-            this.headerBreadIcon =
-                this.collpased ?
-                'el-icon-right' :
-                'el-icon-back'
+    computed: {
+        headerBreadIcon: function() {
+            return this.collpased ? 'el-icon-right' : 'el-icon-back'
         }
     }
 }
