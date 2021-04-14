@@ -114,11 +114,11 @@ module.exports = {
           path: '/device',
           patam: device,
         })
-        constants.EventBus.$emit('on-menu-item-updated', {
-          clazz: constants.MenuClassDevops,
-          subclazz: constants.MenuSubClassDeviceList,
-          menu: menu,
-        })
+      })
+      constants.EventBus.$emit('on-menu-item-updated', {
+        clazz: constants.MenuClassDevops,
+        subclazz: constants.MenuSubClassDeviceList,
+        menu: menu,
       })
     }
   },

@@ -107,8 +107,7 @@ module.exports = {
       })
     },
     onMenuItemUpdated: function(menu) {
-      console.log('======================', menu)
-      var myMenus = this.menus
+      var myMenus = this.menus.map((menu) => menu)
       for (let i = 0; i < myMenus.length; i++) {
         if (menu.clazz == myMenus[i].clazz) {
           for (let k = 0; k < myMenus[i].submenus.length; k++) {
