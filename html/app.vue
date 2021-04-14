@@ -1,10 +1,10 @@
 <template>
     <div class="app-main">
-        <el-row>
-            <el-col :span="2">
+        <el-row type="flex">
+            <el-col>
                 <mysidebar ref="mySidebar" :collapsed="sidebarCollapsed"></mysidebar>
             </el-col>
-            <el-col :span="22">
+            <el-col>
                 <myheader @on-header-icon-click="onHeaderIconClick"></myheader>
                 <router-view></router-view>
             </el-col>
