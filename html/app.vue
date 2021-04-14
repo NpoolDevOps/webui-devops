@@ -13,7 +13,9 @@
                     :collapsed="sidebarCollapsed"
                     :parameter="menuParam">
                 </myheader>
-                <router-view></router-view>
+                <router-view
+                    @on-menu-item-updated="onMenuItemUpdated">
+                </router-view>
             </el-col>
         </el-row>
     </div>
@@ -36,6 +38,9 @@ module.exports = {
         },
         onMenuSwitched: function(param) {
             this.menuParam = param
+        },
+        onMenuItemUpdated: function(item) {
+            console.log(item)
         }
     }
 }

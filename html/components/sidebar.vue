@@ -38,6 +38,8 @@
   </div>
 </template>
 <script>
+const MenuClassDevops = 'devops'
+
 module.exports = {
   props: {
     collapsed: {
@@ -46,10 +48,10 @@ module.exports = {
     menus: {
       default: [
         { 
-          title: '導航一', icon: 'el-icon-location', path: '/',
+          title: '運維控制檯', icon: 'el-icon-location', path: '/', class: MenuClassDevops,
           submenus: [
             { 
-              title: '分組一', path: '/group',
+              title: '礦工列表', path: '/group',
               submenus: [
                 { title: '選項一', path: '/group/item' },
                 { title: '選項二', path: '/group/item' },
@@ -81,7 +83,6 @@ module.exports = {
     onMenuSelected: function(index) {
       idxs = index.split(this.indexSeparator)
       var items = []
-      var param = {}
       if (0 < idxs.length) {
         let menu = this.menus[idxs[0]]
         items.push({

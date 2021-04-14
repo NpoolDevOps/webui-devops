@@ -51,28 +51,29 @@ module.exports = {
     };
   },
   created: function () {
-    this.$on("get_my_devices", this.getMyDevices);
+    this.$on('get_my_devices', this.getMyDevices);
+    this.$on('update_menus', this.updateMenu)
   },
   mounted: function () {
-    this.$emit("get_my_devices");
+    this.$emit('get_my_devices');
   },
   methods: {
     getMyDevices: function () {
-      let authCode = this.$cookies.get("authcode");
-      if (!authCode || authCode == "" || authCode == "null") {
+      let authCode = this.$cookies.get('authcode');
+      if (!authCode || authCode == '' || authCode == 'null') {
         ELEMENT.Notification({
-          title: "授權失敗",
-          message: "授權碼缺失: " + authCode,
-          type: "error",
+          title: '授權失敗',
+          message: '授權碼缺失: ' + authCode,
+          type: 'error',
         });
         return;
       }
 
       var self = this;
       axios({
-        url: "https://devops.npool.top/api/v0/device/mine",
-        method: "post",
-        headers: { "Content-Type": "application/json" },
+        url: 'https://devops.npool.top/api/v0/device/mine',
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
         data: {
           auth_code: authCode,
         },
@@ -82,9 +83,9 @@ module.exports = {
 
           if (resp.code != 0) {
             ELEMENT.Notification({
-              title: "獲取設備列表失敗",
+              title: '獲取設備列表失敗',
               message: resp.msg,
-              type: "error",
+              type: 'error',
             });
             return;
           }
@@ -93,12 +94,28 @@ module.exports = {
         })
         .catch(function (error) {
           ELEMENT.Notification({
-            title: "獲取設備列表失敗",
+            title: '獲取設備列表失敗',
             message: error.message,
-            type: "error",
+            type: 'error',
           });
         });
     },
+    updateMenu: function() {
+      menu = {
+        title: '設備列表',
+        path: '/device/list',
+        param: this.devices,
+        submenus: [],
+      }
+      this.devices.forEach(function(device) {
+        menu.submenus.push({
+          title: device.local_addr,
+          path: '/device',
+          patam: device,
+        })
+        this.$emit('on-menu-item-updated', menu)
+      })
+    }
   },
 };
 </script>
