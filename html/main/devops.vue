@@ -91,7 +91,7 @@ module.exports = {
           }
 
           self.devices = resp.body.devices;
-          this.$emit("update_menu")
+          self.$emit("update_menu")
         })
         .catch(function (error) {
           ELEMENT.Notification({
