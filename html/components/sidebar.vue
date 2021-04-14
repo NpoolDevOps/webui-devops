@@ -30,7 +30,7 @@
           </el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item>
+      <el-menu-item index="100">
          <i class="el-icon-location"></i>
         <span slot="title">設置</span>
       </el-menu-item>
@@ -79,3 +79,9 @@ module.exports = {
   }
 }
 </script>
+<style scoped>
+  .el-menu-vertical:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
+</style>
