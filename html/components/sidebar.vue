@@ -53,18 +53,18 @@ module.exports = {
         {
           title: "運維控制檯",
           icon: "el-icon-location",
-          path: "/",
+          path: "/html",
           clazz: constants.MenuClassDevops,
           submenus: [
             {
               title: "礦工列表",
-              path: "/",
+              path: "/html",
               clazz: constants.MenuSubClassDeviceList,
               submenus: [],
             },
             {
               title: "网关列表",
-              path: "/",
+              path: "/html",
               clazz: constants.MenuSubClassDeviceList,
               submenus: [],
             }
@@ -73,7 +73,7 @@ module.exports = {
         {
           title: "導航二",
           icon: "el-icon-location",
-          path: "/",
+          path: "/html",
           submenus: [
             {
               title: "分組一",

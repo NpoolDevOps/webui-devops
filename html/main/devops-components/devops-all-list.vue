@@ -76,7 +76,7 @@ module.exports = {
     updateMenu: function () {
       menu = {
         title: "設備列表",
-        path: "/",
+        path: "/html",
         param: this.devices,
         submenus: [],
       };
