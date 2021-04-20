@@ -2,9 +2,13 @@
   <div>
     <el-menu
       class="el-menu-vertical"
+      text-color="#bfcbd9"
+      active-text-color="#20a0ff"
+      background-color="#324157"
       :default-active="defaultActiveMenuIndex"
       :collapse="collapsed"
       @select="onMenuSelected"
+      router
     >
       <el-submenu
         v-for="(submenu1, index1) in menus"
@@ -31,12 +35,13 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="100">
-         <i class="el-icon-location"></i>
+        <i class="el-icon-location"></i>
         <span slot="title">設置</span>
       </el-menu-item>
     </el-menu>
   </div>
 </template>
+
 <script>
 module.exports = {
   props: {
@@ -45,95 +50,118 @@ module.exports = {
     },
     menus: {
       default: [
-        { 
-          title: '運維控制檯', icon: 'el-icon-location', path: '/', clazz: constants.MenuClassDevops,
-          submenus: [
-            { 
-              title: '礦工列表', path: '/group', clazz: constants.MenuSubClassDeviceList,
-              submenus: [],
-            }
-          ]
-        }, {
-          title: '導航二', icon: 'el-icon-location', path: '/',
+        {
+          title: "運維控制檯",
+          icon: "el-icon-location",
+          path: "/",
+          clazz: constants.MenuClassDevops,
           submenus: [
             {
-              title: '分組一', path: '/group',
-              submenus: [
-                { title: '選項一', path: '/group/item' },
-                { title: '選項二', path: '/group/item' }
-              ]
+              title: "礦工列表",
+              path: "/",
+              clazz: constants.MenuSubClassDeviceList,
+              submenus: [],
+            },
+            {
+              title: "网关列表",
+              path: "/",
+              clazz: constants.MenuSubClassDeviceList,
+              submenus: [],
             }
-          ]
-        }
-      ]
-    }
+          ],
+        },
+        {
+          title: "導航二",
+          icon: "el-icon-location",
+          path: "/",
+          submenus: [
+            {
+              title: "分組一",
+              path: "/group",
+              submenus: [
+                {
+                  title: "選項一",
+                  path: "/group/item",
+                },
+                {
+                  title: "選項二",
+                  path: "/group/item",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
   data() {
     return {
-      indexSeparator: '-',
-      defaultActiveMenuIndex: '0',
-    }
+      indexSeparator: "-",
+      defaultActiveMenuIndex: "0",
+    };
   },
   methods: {
-    onMenuSelected: function(index) {
-      idxs = index.split(this.indexSeparator)
-      var items = []
+    onMenuSelected: function (index) {
+      idxs = index.split(this.indexSeparator);
+      var items = [];
       if (0 < idxs.length) {
-        let menu = this.menus[idxs[0]]
+        let menu = this.menus[idxs[0]];
         items.push({
           title: menu.title,
           path: menu.path,
           param: menu.param,
-        })
+        });
       }
       if (1 < idxs.length) {
-        let menu = this.menus[idxs[0]].submenus[idxs[1]]
+        let menu = this.menus[idxs[0]].submenus[idxs[1]];
         items.push({
           title: menu.title,
           path: menu.path,
           param: menu.param,
-        })
+        });
       }
       if (2 < idxs.length) {
-        let menu = this.menus[idxs[0]].submenus[idxs[1]].submenus[idxs[2]]
+        let menu = this.menus[idxs[0]].submenus[idxs[1]].submenus[idxs[2]];
         items.push({
           title: menu.title,
           path: menu.path,
           param: menu.param,
-        })
+        });
       }
-      this.$emit('on-menu-switched', {
-        items: items
-      })
+      this.$emit("on-menu-switched", {
+        items: items,
+      });
     },
-    onMenuItemUpdated: function(menu) {
-      var myMenus = this.menus.map((menu) => menu)
+    onMenuItemUpdated: function (menu) {
+      var myMenus = this.menus.map((menu) => menu);
       for (let i = 0; i < myMenus.length; i++) {
         if (menu.clazz == myMenus[i].clazz) {
           for (let k = 0; k < myMenus[i].submenus.length; k++) {
             if (menu.subclazz == myMenus[i].submenus[k].clazz) {
-              myMenus[i].submenus[k].submenus = menu.menu.submenus
-              this.menus = myMenus
-              return
+              myMenus[i].submenus[k].submenus = menu.menu.submenus;
+              this.menus = myMenus;
+              return;
             }
           }
         }
       }
-    }
+    },
   },
   created() {
-    constants.EventBus.$on('on-menu-item-updated', this.onMenuItemUpdated)
+    constants.EventBus.$on("on-menu-item-updated", this.onMenuItemUpdated);
   },
   mounted() {
-    this.onMenuSelected(this.defaultActiveMenuIndex)
+    this.onMenuSelected(this.defaultActiveMenuIndex);
   },
   beforeDestroy() {
-    constants.EventBus.$off('on-menu-item-updated')
-  }
-}
+    constants.EventBus.$off("on-menu-item-updated");
+  },
+};
 </script>
+
 <style scoped>
-  .el-menu-vertical:not(.el-menu--collapse) {
-    width: 200px;
-  }
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 200px;
+  
+}
 </style>
