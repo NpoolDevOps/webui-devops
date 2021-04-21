@@ -84,7 +84,7 @@ module.exports = {
         menu.submenus.push({
           title: device.local_addr,
           path: "/device",
-          patam: device,
+          param: device,
         });
       });
       constants.EventBus.$emit("on-menu-item-updated", {
