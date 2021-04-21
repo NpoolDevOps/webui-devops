@@ -8,8 +8,6 @@ const i18n = new VueI18n({
     }
 })
 
-// Locale.i18n((key, value) => i18n.t(key, value))
-
 new Vue({
     el: "#app",
     i18n,

@@ -17,6 +17,4 @@ const zh  = new Object({
         errorComputing: '错误算力',
         punishment: '惩罚',
     },
-    // ...zhLocale
-    
 })

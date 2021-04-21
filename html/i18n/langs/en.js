@@ -17,6 +17,4 @@ const en  = new Object ({
         errorComputing: 'error computing power',
         punishment: 'punishment',
     },
-    // ...enLocale
-    
  })

@@ -97,12 +97,10 @@ module.exports = {
     changeLanguage: function (command) {
       if (command === 0) {
           this.$i18n.locale = 'zh';
-          console.log('now is zh');
-          console.log(this.$i18n.locale);
+          
         } else if (command === 1) {
           this.$i18n.locale = 'en';
-          console.log('now is en');
-          console.log(this.$i18n.locale);
+          
         }
     },
 
