@@ -140,6 +140,7 @@ module.exports = {
             if (menu.subclazz == myMenus[i].submenus[k].clazz) {
               myMenus[i].submenus[k].submenus = menu.menu.submenus;
               this.menus = myMenus;
+              console.log('更新了一次');
               return;
             }
           }

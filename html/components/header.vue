@@ -12,9 +12,29 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
+
+    <el-col :span="1" class="right-menu">
+      <el-dropdown class="user-menu" trigger="click">
+        <div class="user-head">
+          <el-avatar size="medium"> user </el-avatar> 
+        </div>
+        <el-dropdown-menu slot="dropdown">
+
+          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item divided @click.native="logout">
+            <span style="display:block;">Log Out</span>
+          </el-dropdown-item>
+
+        </el-dropdown-menu>
+      </el-dropdown>
+    </el-col>
+
+
     <el-col span="1" class="right-menu">
       <screenfull id="screenfull" class="right-menu-item" />
     </el-col>
+
+
     <el-col span="1" class="right-menu">
       <el-dropdown class="reight-menu-item" trigger="click" @command="changeLanguage">
         <div>
@@ -25,6 +45,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
+    
   </div>
 </el-row>
 </template>
@@ -42,7 +63,7 @@ module.exports = {
           value: 0
         },
         {
-          label: this.$t('message.en'),
+          label: this.$t('message.en'), 
           value: 1
         }
       ]
@@ -83,6 +104,10 @@ module.exports = {
           console.log('now is en');
           console.log(this.$i18n.locale);
         }
+    },
+
+    async logout(){
+      alert("log out successfully!");
     }
   },
 
@@ -112,7 +137,7 @@ module.exports = {
   width: 40px;
   height: 40px;
   border: none;
-  padding: 0;
+  padding: 0px;
 }
 
 .header-nav {
@@ -121,9 +146,11 @@ module.exports = {
 }
 
 .right-menu {
+  margin: 0%;
   float: right;
-  height: 100%;
   line-height: 50px;
+  height: 50px;
+  width: 50px;
 }
 
 .right-menu-item {
@@ -136,8 +163,18 @@ module.exports = {
   font-size: 22px;
 }
 
-.el-col-1 {
-  text-align: center;
+.right-menu .right-menu-item .el-col-1 {
+  float: right;
   width: 2.5%;
+}
+
+.el-icon-zoom-in,.el-avatar,.el-icon-s-tools {
+  margin: 8px;
+}
+
+.user-head {
+  line-height: 50px;
+  height: 50px;
+  width: 50px;
 }
 </style>
