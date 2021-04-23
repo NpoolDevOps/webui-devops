@@ -59,13 +59,13 @@ module.exports = {
             {
               title: "礦工列表",
               path: "/html",
-              clazz: constants.MenuSubClassDeviceList,
+              clazz: constants.MenuSubClassMinerDeviceList,
               submenus: [],
             },
             {
               title: "网关列表",
               path: "/html",
-              clazz: constants.MenuSubClassDeviceList,
+              clazz: constants.MenuSubClassGatewayDeviceList,
               submenus: [],
             }
           ],
@@ -140,7 +140,6 @@ module.exports = {
             if (menu.subclazz == myMenus[i].submenus[k].clazz) {
               myMenus[i].submenus[k].submenus = menu.menu.submenus;
               this.menus = myMenus;
-              
               return;
             }
           }
