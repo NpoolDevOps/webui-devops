@@ -9,9 +9,15 @@
         <div v-for="(value1, name1) in device.device" class="card-content">
           {{ name1 + " :  " + value1 }}
         </div>
-        <el-divider content-position="left">info</el-divider>
         <div v-for="(value2, name2) in device.info" class="card-content">
-          {{ name2 + " :  " + value2 }}
+          <span class="title-font-style">{{name2 + ': '}}</span>
+          <div v-for="(value3, name3) in value2" class="card-content">
+            {{ name3 + ': ' + value3 }}
+          </div>
+        </div>
+        <br />
+        <div class="card-chart">
+          <pie-chart class="pie-chart" :chartMinerDevice="device" />
         </div>
       </el-card>
     </el-col>
@@ -21,10 +27,13 @@
 
 <script>
 module.exports = {
+  components: {
+    PieChart: httpVueLoader('/html/tool/Echarts/PieChart.vue'),
+  },
+
   data() {
     return {
       devices: [],
-
       minerDevices: [],
       gatewayDevices: [],
       deviceUpdater: -1,
@@ -83,18 +92,21 @@ module.exports = {
                 current_user: device.current_user,
               }, //resp.body.devices中的device，即请求后返回的devices的每个device
               info: {
-                miner_basefee: {},
                 //fee
-                miner_balance: {},
-                miner_available: {},
-                miner_vesting: {},
-                miner_precommit_deposit: {},
-                miner_initial_pledge: {},
+                minerFee: {
+                  miner_balance: {},
+                  miner_available: {},
+                  miner_vesting: {},
+                  miner_precommit_deposit: {},
+                  miner_initial_pledge: {},
+                },
                 //power
-                miner_faulty_power: {},
-                miner_power: {},
-                miner_proving_power: {},
-                miner_committed_power: {},
+                minerPower: {
+                  miner_faulty_power: {},
+                  miner_power: {},
+                  miner_proving_power: {},
+                  miner_committed_power: {},
+                },
               },
             })
           });
@@ -153,30 +165,15 @@ module.exports = {
       let self = this;
       var myMinerDevices = this.minerDevices.map((device) => device);
       myMinerDevices.forEach(function (device) { //this.devices的每一个device,device={device, info}
-        //miner_basefee
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_basefee')
-          .then(function (info) {
-            console.log('miner base fee', 'device: ', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.miner_basefee = 0;
-            } else {
-              device.info.miner_basefee = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner base fee', device.device.local_addr, 'error: ', error);
-          })
-
         //miner_balance
         self.updateDeviceInfoFromPrometheus(device.device, 'miner_balance')
           .then(function (info) {
             console.log('miner balance fee', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_balance = 0;
+              device.info.minerFee.miner_balance = 0;
             } else {
-              device.info.miner_balance = info.data.data.result[0].value[1];
+              device.info.minerFee.miner_balance = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -189,9 +186,9 @@ module.exports = {
             console.log('miner available fee', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_available = 0;
+              device.info.minerFee.miner_available = 0;
             } else {
-              device.info.miner_available = info.data.data.result[0].value[1];
+              device.info.minerFee.miner_available = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -204,9 +201,9 @@ module.exports = {
             console.log('miner faulty_power number', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_faulty_power = 0;
+              device.info.minerPower.miner_faulty_power = 0;
             } else {
-              device.info.miner_faulty_power = info.data.data.result[0].value[1];
+              device.info.minerPower.miner_faulty_power = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -219,9 +216,9 @@ module.exports = {
             console.log('miner power', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_power = 0;
+              device.info.minerPower.miner_power = 0;
             } else {
-              device.info.miner_power = info.data.data.result[0].value[1];
+              device.info.minerPower.miner_power = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -234,9 +231,9 @@ module.exports = {
             console.log('miner vesting', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_vesting = 0;
+              device.info.minerFee.miner_vesting = 0;
             } else {
-              device.info.miner_vesting = info.data.data.result[0].value[1];
+              device.info.minerFee.miner_vesting = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -249,9 +246,9 @@ module.exports = {
             console.log('miner proving_power number', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_proving_power = 0;
+              device.info.minerPower.miner_proving_power = 0;
             } else {
-              device.info.miner_proving_power = info.data.data.result[0].value[1];
+              device.info.minerPower.miner_proving_power = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -264,9 +261,9 @@ module.exports = {
             console.log('miner precommit_deposit number', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_precommit_deposit = 0;
+              device.info.minerFee.miner_precommit_deposit = 0;
             } else {
-              device.info.miner_precommit_deposit = info.data.data.result[0].value[1];
+              device.info.minerFee.miner_precommit_deposit = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -279,9 +276,9 @@ module.exports = {
             console.log('miner initial_pledge number', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_initial_pledge = 0;
+              device.info.minerFee.miner_initial_pledge = 0;
             } else {
-              device.info.miner_initial_pledge = info.data.data.result[0].value[1];
+              device.info.minerFee.miner_initial_pledge = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
@@ -294,16 +291,15 @@ module.exports = {
             console.log('miner committed_power number', device.device.local_addr, 'info: ', info);
             // update device info
             if (info.data.data.result.length === 0) {
-              device.info.miner_committed_power = 0;
+              device.info.minerPower.miner_committed_power = 0;
             } else {
-              device.info.miner_committed_power = info.data.data.result[0].value[1];
+              device.info.minerPower.miner_committed_power = info.data.data.result[0].value[1];
             }
           })
           .catch(function (error) {
             console.log('miner committed_power number', device, device.local_addr, 'error: ', error);
           })
 
-        //
       });
       this.minerDevices = myMinerDevices;
     },
@@ -382,5 +378,10 @@ module.exports = {
   font-size: 14px;
   word-spacing: 1px;
   line-height: 1.8;
+}
+
+.title-font-style {
+  font-size: 18px;
+  font-weight: bold;
 }
 </style>

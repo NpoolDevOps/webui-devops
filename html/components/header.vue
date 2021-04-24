@@ -16,7 +16,7 @@
     <el-col :span="1" class="right-menu">
       <el-dropdown class="user-menu" trigger="click">
         <div class="user-head">
-          <el-avatar size="medium"> user </el-avatar> 
+          <el-avatar size="medium"> user </el-avatar>
         </div>
         <el-dropdown-menu slot="dropdown">
 
@@ -29,11 +29,9 @@
       </el-dropdown>
     </el-col>
 
-
     <el-col span="1" class="right-menu">
       <screenfull id="screenfull" class="right-menu-item" />
     </el-col>
-
 
     <el-col span="1" class="right-menu">
       <el-dropdown class="reight-menu-item" trigger="click" @command="changeLanguage">
@@ -45,7 +43,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
-    
+
   </div>
 </el-row>
 </template>
@@ -53,7 +51,7 @@
 <script>
 module.exports = {
   components: {
-    screenfull: httpVueLoader('./tool/screenfull.vue'),
+    screenfull: httpVueLoader('../tool/screenfull/screenfull.vue'),
   },
 
   data() {
@@ -63,7 +61,7 @@ module.exports = {
           value: 0
         },
         {
-          label: this.$t('message.en'), 
+          label: this.$t('message.en'),
           value: 1
         }
       ]
@@ -96,15 +94,15 @@ module.exports = {
 
     changeLanguage: function (command) {
       if (command === 0) {
-          this.$i18n.locale = 'zh';
-          
-        } else if (command === 1) {
-          this.$i18n.locale = 'en';
-          
-        }
+        this.$i18n.locale = 'zh';
+
+      } else if (command === 1) {
+        this.$i18n.locale = 'en';
+
+      }
     },
 
-    async logout(){
+    async logout() {
       alert("log out successfully!");
     }
   },
@@ -166,7 +164,9 @@ module.exports = {
   width: 2.5%;
 }
 
-.el-icon-zoom-in,.el-avatar,.el-icon-s-tools {
+.el-icon-zoom-in,
+.el-avatar,
+.el-icon-s-tools {
   margin: 8px;
 }
 

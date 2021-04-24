@@ -1,9 +1,10 @@
 <template>
-  <div class="devops">
-    <panellist></panellist>
-    <cardlist></cardlist>
-  </div>
+<div class="devops">
+  <panellist></panellist>
+  <cardlist></cardlist>
+</div>
 </template>
+
 <script>
 module.exports = {
   components: {
