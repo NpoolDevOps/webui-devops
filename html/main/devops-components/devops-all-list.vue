@@ -1,11 +1,12 @@
 <template>
-<div class="card-list">
+<div class="card-list" :v-model="minerDevices" v-if="minerDevices.length !== 0">
   <el-row gutter="20">
-    <el-col span="8" v-for="(device, index) in minerDevices" key="index">
+    <el-col span="8" v-for="(device, index) in minerDevices" :key="index">
       <el-card class="card-style" shadow="hover">
         <div slot="header" class="card-title">
           <el-button type="text" class="title-btn">{{ device.device.local_addr }}</el-button>
         </div>
+        <h3>deviceInfo</h3>
         <div v-for="(value1, name1) in device.device" class="card-content">
           {{ name1 + " :  " + value1 }}
         </div>
@@ -17,7 +18,8 @@
         </div>
         <br />
         <div class="card-chart">
-          <pie-chart class="pie-chart" :chartMinerDevice="device" />
+          <pie-chart-fee class="pie-chart" :send-miner-device='device.device' :send-miner-info='device.info'></pie-chart-fee>
+          <pie-chart-power class="pie-chart" :send-miner-device='device.device' :send-miner-info='device.info'></pie-chart-power>
         </div>
       </el-card>
     </el-col>
@@ -28,7 +30,8 @@
 <script>
 module.exports = {
   components: {
-    PieChart: httpVueLoader('/html/tool/Echarts/PieChart.vue'),
+    PieChartFee: httpVueLoader('/html/tool/Echarts/PieChartFee.vue'),
+    PieChartPower: httpVueLoader('/html/tool/Echarts/PieChartPower.vue'),
   },
 
   data() {
@@ -39,14 +42,17 @@ module.exports = {
       deviceUpdater: -1,
     };
   },
+
   created: function () {
-    this.$on("get_my_devices", this.getMyDevices);
-    this.$on("update_menu", this.updateMenu);
-    this.$on("update_device_info", this.updateDeviceInfo);
+    this.$on('get_my_devices', this.getMyDevices);
+    this.$on('update_menu', this.updateMenu);
+    this.$on('update_device_info', this.updateDeviceInfo);
+    this.$on('update_miner_metrics', this.updateMinerMetrics);
   },
   mounted: function () {
     this.$emit("get_my_devices");
   },
+
   methods: {
     getMyDevices: function () {
       let authCode = this.$cookies.get('authcode');
@@ -59,7 +65,7 @@ module.exports = {
         return;
       }
 
-      var self = this;
+      let self = this;
 
       axios({
           url: 'https://devops.npool.top/api/v0/device/mine',
@@ -82,7 +88,6 @@ module.exports = {
             return;
           }
 
-          self.devices = [];
           resp.body.devices.forEach(function (device) {
             self.devices.push({
               device: {
@@ -91,24 +96,25 @@ module.exports = {
                 local_addr: device.local_addr,
                 current_user: device.current_user,
               }, //resp.body.devices中的device，即请求后返回的devices的每个device
+
               info: {
-                //fee
-                minerFee: {
-                  miner_balance: {},
-                  miner_available: {},
-                  miner_vesting: {},
-                  miner_precommit_deposit: {},
-                  miner_initial_pledge: {},
+                // fee
+                getMinerFee: {
+                  miner_balance: "",
+                  miner_available: "",
+                  miner_vesting: "",
+                  miner_precommit_deposit: "",
+                  miner_initial_pledge: "",
                 },
                 //power
-                minerPower: {
-                  miner_faulty_power: {},
-                  miner_power: {},
-                  miner_proving_power: {},
-                  miner_committed_power: {},
-                },
+                getMinerPower: {
+                  miner_faulty_power: "",
+                  miner_power: "",
+                  miner_proving_power: "",
+                  miner_committed_power: "",
+                }
               },
-            })
+            });
           });
 
           //卡片分类：miner和gateway
@@ -126,11 +132,14 @@ module.exports = {
 
           var timeUpdateMenu = setTimeout(() => {
             self.$emit("update_menu")
-          }, 2000);
+          }, 1000);
 
-          // self.deviceUpdater = setInterval(function () {
-          //   self.$emit('update_device_info');
-          // }, 300000)
+          let time = 5;
+          self.deviceUpdater = setInterval(function () {
+            self.$emit('update_device_info');
+            console.log(time + ' minutes passed...');
+            time += 5;
+          }, 300000)
         })
         .catch(function (error) {
           ELEMENT.Notification({
@@ -139,18 +148,13 @@ module.exports = {
             type: 'error',
           });
         });
-
-      let time = 5;
-      this.deviceUpdater = setInterval(function () {
-        this.$emit('update_device_info');
-        console.log(time + ' minutes passed...');
-        time += 5;
-      }, 300000)
     },
+
     updateDeviceInfo: function () {
       this.updateMinerInfo();
       this.updateGatewayInfo();
     },
+
     updateDeviceInfoFromPrometheus: function (device, metrics) {
       let query = encodeURIComponent(metrics + '{instance="' + device.local_addr + ':52379"}')
       return axios({
@@ -161,148 +165,103 @@ module.exports = {
         },
       })
     },
+
+    updateDeviceMetrics: function (device, metrics, handler) {
+      this.updateDeviceInfoFromPrometheus(device.device, metrics)
+        .then(function (info) {
+          console.log(metrics, device.device.local_addr, 'info: ', info);
+          // update device info
+          if (info.data.data.result.length === 0) {
+            handler(device, metrics, '0');
+          } else {
+            handler(device, metrics, info.data.data.result[0].value[1]);
+          }
+        })
+        .catch(function (error) {
+          console.log(metrics, device, device.local_addr, 'error: ', error);
+        })
+    },
+
+    updateMinerMetrics: function (obj) {
+      let self = this;
+      this.updateDeviceMetrics(obj.device, obj.metrics, function (device, metrics, value) {
+        switch (metrics) {
+          case 'miner_balance':
+            device.info.getMinerFee.miner_balance = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_available'
+            });
+            break;
+          case 'miner_available':
+            device.info.getMinerFee.miner_available = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_vesting'
+            });
+            break;
+          case 'miner_vesting':
+            device.info.getMinerFee.miner_vesting = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_precommit_deposit'
+            });
+            break;
+          case 'miner_precommit_deposit':
+            device.info.getMinerFee.miner_precommit_deposit = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_initial_pledge'
+            });
+            break;
+          case 'miner_initial_pledge':
+            device.info.getMinerFee.miner_initial_pledge = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_faulty_power'
+            });
+            break;
+          case 'miner_faulty_power':
+            device.info.getMinerPower.miner_faulty_power = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_power'
+            });
+            break;
+          case 'miner_power':
+            device.info.getMinerPower.miner_power = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_proving_power'
+            });
+            break;
+          case 'miner_proving_power':
+            device.info.getMinerPower.miner_proving_power = value;
+            self.$emit('update_miner_metrics', {
+              device: device,
+              metrics: 'miner_committed_power'
+            });
+            break;
+          case 'miner_committed_power':
+            // Update value
+            device.info.getMinerPower.miner_committed_power = value;
+            let minerDevices = self.minerDevices.map((device) => device);
+            this.minerDevices = minerDevices;
+            break;
+        }
+      })
+    },
+
     updateMinerInfo: function () {
       let self = this;
-      var myMinerDevices = this.minerDevices.map((device) => device);
-      myMinerDevices.forEach(function (device) { //this.devices的每一个device,device={device, info}
-        //miner_balance
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_balance')
-          .then(function (info) {
-            console.log('miner balance fee', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerFee.miner_balance = 0;
-            } else {
-              device.info.minerFee.miner_balance = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner balance fee', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_available
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_available')
-          .then(function (info) {
-            console.log('miner available fee', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerFee.miner_available = 0;
-            } else {
-              device.info.minerFee.miner_available = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner available fee', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_faulty_power
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_faulty_power')
-          .then(function (info) {
-            console.log('miner faulty_power number', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerPower.miner_faulty_power = 0;
-            } else {
-              device.info.minerPower.miner_faulty_power = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner faulty_power number', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_power
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_power')
-          .then(function (info) {
-            console.log('miner power', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerPower.miner_power = 0;
-            } else {
-              device.info.minerPower.miner_power = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner power', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_vesting
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_vesting')
-          .then(function (info) {
-            console.log('miner vesting', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerFee.miner_vesting = 0;
-            } else {
-              device.info.minerFee.miner_vesting = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner vesting', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_proving_power
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_proving_power')
-          .then(function (info) {
-            console.log('miner proving_power number', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerPower.miner_proving_power = 0;
-            } else {
-              device.info.minerPower.miner_proving_power = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner proving_power number', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_precommit_deposit
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_precommit_deposit')
-          .then(function (info) {
-            console.log('miner precommit_deposit number', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerFee.miner_precommit_deposit = 0;
-            } else {
-              device.info.minerFee.miner_precommit_deposit = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner precommit_deposit number', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_initial_pledge
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_initial_pledge')
-          .then(function (info) {
-            console.log('miner initial_pledge number', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerFee.miner_initial_pledge = 0;
-            } else {
-              device.info.minerFee.miner_initial_pledge = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner initial_pledge number', device, device.local_addr, 'error: ', error);
-          })
-
-        //miner_committed_power
-        self.updateDeviceInfoFromPrometheus(device.device, 'miner_committed_power')
-          .then(function (info) {
-            console.log('miner committed_power number', device.device.local_addr, 'info: ', info);
-            // update device info
-            if (info.data.data.result.length === 0) {
-              device.info.minerPower.miner_committed_power = 0;
-            } else {
-              device.info.minerPower.miner_committed_power = info.data.data.result[0].value[1];
-            }
-          })
-          .catch(function (error) {
-            console.log('miner committed_power number', device, device.local_addr, 'error: ', error);
-          })
-
+      this.minerDevices.forEach(function (device) { //this.devices的每一个device,device={device, info}
+        self.$emit('update_miner_metrics', {
+          device: device,
+          metrics: 'miner_balance'
+        });
       });
-      this.minerDevices = myMinerDevices;
     },
+
     updateGatewayInfo: function () {
       console.log('NOT IMPLEMENTED')
     },
