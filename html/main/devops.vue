@@ -8,8 +8,8 @@
 <script>
 module.exports = {
   components: {
-    devopsPanelList: httpVueLoader("./devops-components/devopsPanelList.vue"),
-    devopsAllList: httpVueLoader("./devops-components/devopsAllList.vue"),
+    devopsPanelList: httpVueLoader("devops-components/devopsPanelList.vue"),
+    devopsAllList: httpVueLoader("devops-components/devopsAllList.vue"),
   }
 }
 </script>
