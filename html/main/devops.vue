@@ -1,15 +1,15 @@
 <template>
 <div class="devops">
-  <panellist></panellist>
-  <cardlist></cardlist>
+  <devops-panel-list></devops-panel-list>
+  <devops-all-list></devops-all-list>
 </div>
 </template>
 
 <script>
 module.exports = {
   components: {
-    panellist: httpVueLoader("./devops-components/devops-panel-list.vue"),
-    cardlist: httpVueLoader("./devops-components/devops-all-list.vue"),
+    devopsPanelList: httpVueLoader("./devops-components/devopsPanelList.vue"),
+    devopsAllList: httpVueLoader("./devops-components/devopsAllList.vue"),
   }
 }
 </script>
