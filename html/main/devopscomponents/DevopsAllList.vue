@@ -30,8 +30,8 @@
 <script>
 module.exports = {
   components: {
-    PieChartFee: httpVueLoader('/html/tool/Echarts/PieChartFee.vue'),
-    PieChartPower: httpVueLoader('/html/tool/Echarts/PieChartPower.vue'),
+    PieChartFee: httpVueLoader('../../tool/Echarts/PieChartFee.vue'),
+    PieChartPower: httpVueLoader('../../tool/Echarts/PieChartPower.vue'),
   },
 
   data() {
@@ -158,7 +158,7 @@ module.exports = {
     updateDeviceInfoFromPrometheus: function (device, metrics) {
       let query = encodeURIComponent(metrics + '{instance="' + device.local_addr + ':52379"}')
       return axios({
-        url: 'http://47.99.107.242:9090/api/v1/query?query=' + query,
+        url: 'https://prometheus.npool.top/api/v1/query?query=' + query,
         method: 'get',
         headers: {
           'Content-Type': 'application/json'
