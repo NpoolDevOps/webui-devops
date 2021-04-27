@@ -29,38 +29,38 @@ module.exports = {
     },
     menus: {
       default: [{
-          title: "運維控制檯",
-          icon: "el-icon-location",
-          path: "/",
+          title: '運維控制檯',
+          icon: 'el-icon-location',
+          path: '/',
           clazz: constants.MenuClassDevops,
           submenus: [{
-              title: "礦工列表",
-              path: "/",
+              title: '礦工列表',
+              path: '/',
               clazz: constants.MenuSubClassMinerDeviceList,
               submenus: [],
             },
             {
-              title: "網關列表",
-              path: "/",
+              title: '網關列表',
+              path: '/',
               clazz: constants.MenuSubClassGatewayDeviceList,
               submenus: [],
             }
           ],
         },
         {
-          title: "導航二",
-          icon: "el-icon-location",
-          path: "/",
+          title: '導航二',
+          icon: 'el-icon-location',
+          path: '/',
           submenus: [{
-            title: "分組一",
-            path: "/group",
+            title: '分組一',
+            path: '/group',
             submenus: [{
-                title: "選項一",
-                path: "/group/item",
+                title: '選項一',
+                path: '/group/item',
               },
               {
-                title: "選項二",
-                path: "/group/item",
+                title: '選項二',
+                path: '/group/item',
               },
             ],
           }, ],
@@ -70,8 +70,8 @@ module.exports = {
   },
   data() {
     return {
-      indexSeparator: "-",
-      defaultActiveMenuIndex: "0",
+      indexSeparator: '-',
+      defaultActiveMenuIndex: '0',
     };
   },
   methods: {
@@ -102,7 +102,7 @@ module.exports = {
           param: menu.param,
         });
       }
-      this.$emit("on-menu-switched", {
+      this.$emit('on-menu-switched', {
         items: items,
       });
     },
@@ -122,16 +122,18 @@ module.exports = {
     },
   },
   created() {
-    constants.EventBus.$on("on-menu-item-updated", this.onMenuItemUpdated);
+    constants.EventBus.$on('on-menu-item-updated', this.onMenuItemUpdated);
   },
   mounted() {
     this.onMenuSelected(this.defaultActiveMenuIndex);
   },
   beforeDestroy() {
-    constants.EventBus.$off("on-menu-item-updated");
+    constants.EventBus.$off('on-menu-item-updated');
   },
 };
 </script>
+
+
 
 <style scoped>
 .el-menu-vertical:not(.el-menu--collapse) {
