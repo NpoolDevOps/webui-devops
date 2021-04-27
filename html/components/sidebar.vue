@@ -31,17 +31,17 @@ module.exports = {
       default: [{
           title: "運維控制檯",
           icon: "el-icon-location",
-          path: "/html",
+          path: "/",
           clazz: constants.MenuClassDevops,
           submenus: [{
               title: "礦工列表",
-              path: "/html",
+              path: "/",
               clazz: constants.MenuSubClassMinerDeviceList,
               submenus: [],
             },
             {
               title: "網關列表",
-              path: "/html",
+              path: "/",
               clazz: constants.MenuSubClassGatewayDeviceList,
               submenus: [],
             }
@@ -50,7 +50,7 @@ module.exports = {
         {
           title: "導航二",
           icon: "el-icon-location",
-          path: "/html",
+          path: "/",
           submenus: [{
             title: "分組一",
             path: "/group",
@@ -98,7 +98,7 @@ module.exports = {
         let menu = this.menus[idxs[0]].submenus[idxs[1]].submenus[idxs[2]];
         items.push({
           title: menu.title,
-          path: menu.path,
+          path: '/' + index,
           param: menu.param,
         });
       }
