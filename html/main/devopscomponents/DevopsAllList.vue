@@ -1,26 +1,31 @@
 <template>
 <div class="card-list" :v-model="minerDevices" v-if="minerDevices.length !== 0">
   <el-row gutter="20">
-    <el-col span="8" v-for="(device, index) in minerDevices" :key="index">
+    <el-col span="10" v-for="(device, index) in minerDevices" :key="index">
       <el-card class="card-style" shadow="hover">
         <div slot="header" class="card-title">
-          <el-button type="text" class="title-btn">{{ device.device.local_addr }}</el-button>
+          <el-button :id="device.device.pathIndex" type="text" class="title-btn" @click="goToDetail($event)">{{ device.device.local_addr }}</el-button>
         </div>
-        <h3>deviceInfo</h3>
-        <div v-for="(value1, name1) in device.device" class="card-content">
+        <span class="title-font-style">deviceInfo</span>
+        <div v-for="(value1, name1) in device.device" class="card-content" v-if="name1 != 'pathIndex'">
           {{ name1 + " :  " + value1 }}
         </div>
-        <div v-for="(value2, name2) in device.info" class="card-content">
-          <span class="title-font-style">{{name2 + ': '}}</span>
-          <div v-for="(value3, name3) in value2" class="card-content">
-            {{ name3 + ': ' + value3 }}
-          </div>
-        </div>
-        <br />
-        <div class="card-chart">
-          <pie-chart-fee class="pie-chart" :send-miner-device='device.device' :send-miner-info='device.info'></pie-chart-fee>
-          <pie-chart-power class="pie-chart" :send-miner-device='device.device' :send-miner-info='device.info'></pie-chart-power>
-        </div>
+        <el-row v-for="(value2, name2) in device.info" gutter="20">
+          <el-col :span="10">
+            <div class="card-content">
+              <span class="title-font-style">{{name2 + ': '}}</span>
+              <div v-for="(value3, name3) in value2" class="card-content">
+                {{ name3 + ': ' + value3 }}
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="14">
+            <div class="card-chart">
+              <pie-chart-fee class="pie-chart" :send-miner-device='device.device' :send-miner-info='device.info' v-if="name2 === 'getMinerFee'"></pie-chart-fee>
+              <pie-chart-power class="pie-chart" :send-miner-device='device.device' :send-miner-info='device.info' v-if="name2 === 'getMinerPower'"></pie-chart-power>
+            </div>
+          </el-col>
+        </el-row>
       </el-card>
     </el-col>
   </el-row>
@@ -342,5 +347,14 @@ module.exports = {
 .title-font-style {
   font-size: 18px;
   font-weight: bold;
+}
+
+.card-carousel {
+  border: 1px solid rgb(221, 221, 221);
+}
+
+.card-style .el-card__body {
+  padding: 0px 10px;
+  padding-top: 5px;
 }
 </style>

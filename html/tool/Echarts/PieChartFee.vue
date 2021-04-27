@@ -1,5 +1,5 @@
 <template>
-<div :id="cardIDFee" style="width: 100%; height: 300px;"></div>
+<div :id="cardIDFee" style="width: 100%; height: 180px;"></div>
 </template>
 
 <script>
@@ -65,8 +65,6 @@ module.exports = {
 
   methods: {
     updateChart: function () {
-
-      let feeNameArr = Object.keys(this.getMinerChartFeeInfo);
       var feeChart = echarts.init(document.getElementById(this.cardIDFee));
       let feeSeriesData = [];
 
@@ -86,17 +84,12 @@ module.exports = {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
-        legend: {
-          left: 'center',
-          bottom: '10',
-          data: feeNameArr,
-        },
         series: [{
           name: 'fee',
           type: 'pie',
           roseType: 'radius',
-          radius: [15, 95],
-          center: ['50%', '38%'],
+          radius: [10, 65],
+          center: ['50%', '50%'],
           data: feeSeriesData,
           animationEasing: 'cubicInOut',
           animationDuration: 2600
