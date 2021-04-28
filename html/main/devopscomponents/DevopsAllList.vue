@@ -2,20 +2,29 @@
 <div class="card-list" :v-model="minerDevices" v-if="minerDevices.length !== 0">
   <el-row gutter="20">
     <el-col span="10" v-for="(device, index) in minerDevices" :key="index">
-      <el-card class="card-style" shadow="hover">
+      <el-card class="card-list-style" shadow="hover">
         <div slot="header" class="card-title">
           <el-button :id="device.device.pathIndex" type="text" class="title-btn" @click="goToDetail($event)">{{ device.device.local_addr }}</el-button>
+          <div class="reminder-light">
+            <div class="outer">
+              <div class="inner"></div>
+            </div>
+          </div>
         </div>
-        <span class="title-font-style">deviceInfo</span>
-        <div v-for="(value1, name1) in device.device" class="card-content" v-if="name1 != 'pathIndex'">
-          {{ name1 + " :  " + value1 }}
+        <div>
+          <span class="title-font-style title-style">{{$t('deviceInfos.deviceInfo')}}: </span>
+          <div class="card-content">
+            <div v-for="(value1, name1, index1) in device.device">
+              <span v-if="name1 != 'pathIndex'">{{$t(`device[${parseInt(index1)}]`)}} : {{value1}}</span>
+            </div>
+          </div>
         </div>
-        <el-row v-for="(value2, name2) in device.info" gutter="20">
+        <el-row v-for="(value2, name2, index2) in device.info" gutter="20">
           <el-col :span="10">
-            <div class="card-content">
-              <span class="title-font-style">{{name2 + ': '}}</span>
-              <div v-for="(value3, name3) in value2" class="card-content">
-                {{ name3 + ': ' + value3 }}
+            <div>
+              <span class="title-font-style ">{{$t(`minerInfo[${parseInt(index2)}]`)}}</span>
+              <div v-for="(value3, name3, index3) in value2" class="card-content">
+                {{$t(`getMiner.${name2}[${parseInt(index3)}]`)}} : {{value3}}
               </div>
             </div>
           </el-col>
@@ -59,6 +68,11 @@ module.exports = {
   },
 
   methods: {
+    goToDetail: function (a) {
+      // alert(a.currentTarget.id);
+      this.$router.push(a.currentTarget.id);
+    },
+    
     getMyDevices: function () {
       let authCode = this.$cookies.get('authcode');
       if (!authCode || authCode == '' || authCode == 'null') {
@@ -84,6 +98,8 @@ module.exports = {
         })
         .then(function (response) {
           let resp = response.data;
+          let num = 0;
+
           if (resp.code != 0) {
             ELEMENT.Notification({
               title: '獲取設備列表失敗',
@@ -100,6 +116,7 @@ module.exports = {
                 role: device.role,
                 local_addr: device.local_addr,
                 current_user: device.current_user,
+                pathIndex: '/0-0-' + num,
               }, //resp.body.devices中的device，即请求后返回的devices的每个device
 
               info: {
@@ -120,6 +137,7 @@ module.exports = {
                 }
               },
             });
+            num++;
           });
 
           //卡片分类：miner和gateway
@@ -316,44 +334,90 @@ module.exports = {
 <style scoped>
 .el-card__header {
   border-bottom: 2px solid rgb(221, 221, 221);
+  height: 50px;
 }
 
 .card-list {
   padding: 10px;
   float: left;
   width: 100%;
-  box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
 }
 
-.card-style {
+.card-list-style {
   border: 1px solid rgb(221, 221, 221);
   border-radius: 20px;
-  width: 90%;
+  width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+
+}
+
+.title-style {
+  padding: 10px 0px;
 }
 
 .title-btn {
   padding: 0;
   font-size: 18px;
+  text-align: left;
+  float: left;
+  display: inline;
+}
+
+.reminder-light {
+  float: right;
+  display: inline;
+}
+
+.outer {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #67C23A;
+  box-shadow: #67C23A 0px 0px 10px;
+}
+
+.inner {
+  width: 24px;
+  height: 24px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  opacity: 0.7;
+  animation-name: move;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes move {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.7
+  }
 }
 
 .card-content {
   font-size: 14px;
   word-spacing: 1px;
   line-height: 1.8;
+  padding: 0px 0px 0px 5px;
 }
 
 .title-font-style {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
+  word-spacing: 1px;
+  line-height: 1.8;
 }
 
 .card-carousel {
   border: 1px solid rgb(221, 221, 221);
 }
 
-.card-style .el-card__body {
+.card-list-style .el-card__body {
   padding: 0px 10px;
   padding-top: 5px;
 }

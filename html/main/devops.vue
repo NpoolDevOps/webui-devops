@@ -13,3 +13,9 @@ module.exports = {
   }
 }
 </script>
+
+<style scoped>
+  .devops {
+    background-color: rgb(245, 245, 245);
+  }
+</style>

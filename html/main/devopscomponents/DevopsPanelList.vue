@@ -93,8 +93,12 @@
 </script>
 
 <style scoped>
+.total-list {
+  padding: 0px 10px;
+}
+
 .card-panel {
-  height: 108px;
+  height: 120px;
   cursor: pointer;
   font-size: 12px;
   position: relative;
@@ -102,7 +106,10 @@
   color: rgb(0, 0, 0);
   background: #fff;
   box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.05);
+  /* border-color: rgba(0, 0, 0, 0.05); */
+  margin: 5px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 20px;
 }
 
 .card-panel-icon {
@@ -130,11 +137,6 @@
 .card-panel-number {
   font-size: 20px;
   float: right;
-}
-
-.total-list {
-  padding: 10px;
-  box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
 }
 
 </style>

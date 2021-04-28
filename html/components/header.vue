@@ -8,7 +8,7 @@
     <el-col span="10" class="header-nav" :span="10">
       <el-breadcrumb>
         <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
-          {{ item.title }}
+          {{ $t(item.title) }}
         </el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
@@ -20,9 +20,9 @@
         </div>
         <el-dropdown-menu slot="dropdown">
 
-          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item>{{$t('message.userCenter')}}</el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+            <span style="display:block;">{{$t('message.logOut')}}</span>
           </el-dropdown-item>
 
         </el-dropdown-menu>
