@@ -23,6 +23,8 @@
       <a href="https://beian.miit.gov.cn/" target="_blank">备案号</a>
       <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备2021006061号</a>
     </div>
+
+    <el-backtop target=".app-main"><i class="el-icon-caret-top"></el-backtop>
   </div>
 </template>
 
@@ -52,7 +54,8 @@ module.exports = {
 <style scoped>
 .app-main {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow-x: hidden;
 }
 
 .app-sidebar {
