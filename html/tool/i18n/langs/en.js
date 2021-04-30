@@ -6,15 +6,15 @@ const en  = new Object ({
         logOut: 'Log Out',
     }, 
     
-    panel: {
-        miner: 'miner number',
-        equipment: 'equipment number',
-        coin: 'total number of coin',
-        newCoin: 'new coins per day',
-        totalComputing: 'total computing power',
-        errorComputing: 'error computing power',
-        punishment: 'punishment',
-    },
+    panel: [
+        'miner number',
+        'equipment number',
+        'total number of coin',
+        'new coins per day',
+        'total computing power',
+        'error computing power',
+        'punishment',
+    ],
 
     deviceInfos: {
         deviceInfo: 'Device Info',

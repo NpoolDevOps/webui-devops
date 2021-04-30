@@ -6,15 +6,15 @@ const zh  = new Object({
         logOut: '退出',
     },
     
-    panel: {
-        miner: '矿工数',
-        equipment: '设备',
-        coin: '币总数',
-        newCoin: '每天新增币总数',
-        totalComputing: '总算力',
-        errorComputing: '错误算力',
-        punishment: '惩罚',
-    },
+    panel: [
+        '矿工数',
+        '设备',
+        '币总数',
+        '每天新增币总数',
+        '总算力',
+        '错误算力',
+        '惩罚',
+    ],
 
     deviceInfos: {
         deviceInfo: '设备信息',
