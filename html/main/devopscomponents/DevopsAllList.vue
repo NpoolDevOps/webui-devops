@@ -66,7 +66,6 @@ module.exports = {
       immediate: true,
       deep: true,
       handler: function(newValue, oldValue){
-        console.log('newValue: ', newValue);
         this.cardMinerDevices = newValue;
       },
       
@@ -75,7 +74,6 @@ module.exports = {
 
   methods: {
     goToDetail: function (a) {
-      // alert(a.currentTarget.id);
       this.$router.push(a.currentTarget.id);
     },
   },
