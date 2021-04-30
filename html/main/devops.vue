@@ -1,11 +1,7 @@
 <template>
 <div class="devops" v-if="isShow">
-  <keep-alive>
     <devops-panel-list class="devops" :send-devices="devices" :send-miner-devices="minerDevices"></devops-panel-list>
-  </keep-alive>
-  <keep-alive>
     <devops-all-list class="devops" :send-miner-devices="minerDevices"></devops-all-list>
-  </keep-alive>
 </div>
 </template>
 
