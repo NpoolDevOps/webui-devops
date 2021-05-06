@@ -90,15 +90,16 @@ module.exports = {
 </script>
 
 <style scoped>
-.el-card__header {
-  border-bottom: 2px solid rgb(221, 221, 221);
-  height: 50px;
-}
-
 .card-list {
   padding: 10px;
   float: left;
   width: 100%;
+}
+
+.el-card__header {
+  border-bottom: none;
+  box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.05);
+  height: 50px;
 }
 
 .card-list-style {
@@ -107,19 +108,20 @@ module.exports = {
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
-
 }
 
-.title-style {
-  padding: 10px 0px;
+.title-font-style {
+  font-size: 16px;
+  font-weight: bold;
+  word-spacing: 1px;
+  line-height: 1.8;
 }
 
 .title-btn {
   padding: 0;
   font-size: 18px;
-  text-align: left;
-  float: left;
-  display: inline;
+  
+  display: inline-block;
 }
 
 .reminder-light {
@@ -162,13 +164,6 @@ module.exports = {
   word-spacing: 1px;
   line-height: 1.8;
   padding: 0px 0px 0px 5px;
-}
-
-.title-font-style {
-  font-size: 16px;
-  font-weight: bold;
-  word-spacing: 1px;
-  line-height: 1.8;
 }
 
 .card-carousel {
