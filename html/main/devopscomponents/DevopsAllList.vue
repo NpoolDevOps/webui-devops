@@ -1,7 +1,7 @@
 <template>
 <div class="card-list" v-if="cardMinerDevices.length !== 0">
   <el-row gutter="20">
-    <el-col span="10" class="card-margin" v-for="(device, index) in cardMinerDevices" :key="index">
+    <el-col span="7" class="card-margin" v-for="(device, index) in cardMinerDevices" :key="index">
       <el-card class="card-list-style" shadow="hover">
         <div slot="header" class="card-title">
           <el-button :id="device.device.pathIndex" type="text" class="title-btn" @click="goToDetail($event)">{{ device.device.local_addr }}</el-button>
