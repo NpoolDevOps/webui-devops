@@ -1,5 +1,5 @@
 <template>
-<div :id="cardIDPower" style="width: 100%; height: 180px;"></div>
+<div :id="cardIDPower" style="width: 100%; height: 160px;"></div>
 </template>
 
 <script>
@@ -82,13 +82,20 @@ module.exports = {
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
+          formatter: '{a} <br/>{b} : {c} ({d}%)',
+          confine: true,
         },
         series: [{
           name: 'power',
           type: 'pie',
-          roseType: 'radius',
-          radius: [10, 65],
+          // roseType: 'radius',
+          radius: [10, 50],
+          label: {
+            normal: {
+              position: 'inner',
+              show: false
+            }
+          },
           center: ['50%', '50%'],
           data: powerSeriesData,
           animationEasing: 'cubicInOut',
