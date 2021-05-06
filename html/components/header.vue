@@ -1,51 +1,45 @@
 <template>
-<el-row class="header-color header-style">
-  <div class="header-font">
-    <el-col span="1" class="header-icon header-line-height">
-      <el-button class="header-icon" :icon="headerBreadIcon" @click="onHeaderIconClick">
-      </el-button>
-    </el-col>
-    <el-col span="10" class="header-nav" :span="10">
-      <el-breadcrumb>
-        <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
-          {{ $t(item.title) }}
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </el-col>
-
-    <el-col :span="1" class="right-menu">
-      <el-dropdown class="user-menu" trigger="click">
-        <div class="user-head">
-          <el-avatar size="medium"> user </el-avatar>
-        </div>
-        <el-dropdown-menu slot="dropdown">
-
-          <el-dropdown-item>{{$t('message.userCenter')}}</el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">{{$t('message.logOut')}}</span>
-          </el-dropdown-item>
-
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-col>
-
-    <el-col span="1" class="right-menu">
-      <screenfull id="screenfull" class="right-menu-item" />
-    </el-col>
-
-    <el-col span="1" class="right-menu">
-      <el-dropdown class="reight-menu-item" trigger="click" @command="changeLanguage">
-        <div>
-          <i class="el-icon-s-tools"></i>
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="lang.value" v-for="lang in langs" :key="lang.value">{{lang.label}}</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-col>
-
+<div class="header-row">
+  <div>
+    <el-button class="hamburger-icon header-line-height" :icon="headerBreadIcon" @click="onHeaderIconClick">
+  </el-button>
   </div>
-</el-row>
+
+  <div>
+    <el-breadcrumb class="breadcrumb-style">
+    <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
+      {{ $t(item.title) }}
+    </el-breadcrumb-item>
+  </el-breadcrumb>
+  </div>
+
+  <div class="right-menu">
+    <template>
+      <screenfull id="screenfull" class="right-menu-item" />
+    </template>
+
+    <el-dropdown class="right-menu-item" trigger="click" @command="changeLanguage">
+      <div>
+        <i class="el-icon-s-tools"></i>
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item :command="lang.value" v-for="lang in langs" :key="lang.value">{{lang.label}}</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+
+    <el-dropdown class="right-menu-item user-menu" trigger="click">
+      <div class="user-head">
+        <el-avatar class="user-head-img" size="medium"> user </el-avatar>
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>个人中心</el-dropdown-item>
+        <el-dropdown-item divided @click.native="logout">
+          <span style="display:block;">Log Out</span>
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </div>
+</div>
 </template>
 
 <script>
@@ -116,63 +110,53 @@ module.exports = {
 </script>
 
 <style scoped>
+.header-row {
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background-color: transparent;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+  display: inline-block;
+}
+
 .header-line-height {
   line-height: 40px;
 }
 
-.header-style {
-  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-  padding: 1px;
-}
-
-.header-color {
-  background-color: transparent;
-}
-
-.header-icon {
+.hamburger-icon {
+  float: left;
   width: 40px;
   height: 40px;
   border: none;
   padding: 0px;
 }
 
-.header-nav {
-  background-color: transparent;
-  padding-left: 10px;
+.breadcrumb-style {
+  float: left;
 }
 
 .right-menu {
-  margin: 0%;
   float: right;
+  height: 100%;
   line-height: 50px;
-  height: 50px;
-  width: 50px;
 }
 
 .right-menu-item {
   display: inline-block;
-  font-size: 22px;
-  color: #5a5e66;
-}
-
-.el-icon-s-tools {
-  font-size: 22px;
-}
-
-.right-menu .right-menu-item .el-col-1 {
-  float: right;
-  width: 2.5%;
-}
-
-.el-icon-zoom-in,
-.el-avatar,
-.el-icon-s-tools {
-  margin: 8px;
+  padding: 0 8px;
+  height: 100%;
+  font-size: 18px;
+  vertical-align: text-bottom;
 }
 
 .user-head {
-  line-height: 50px;
-  height: 50px;
-  width: 50px;
+  height: 100%;
+  position: relative;
+}
+
+.user-head-img {
+  cursor: pointer;
+  margin-top: 7px;
 }
 </style>
