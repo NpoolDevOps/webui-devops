@@ -172,7 +172,7 @@ module.exports = {
 }
 
 .card-carousel {
-  border: 1px solid rgb(221, 221, 221);
+  display: inline;
 }
 
 .card-list-style .el-card__body {
