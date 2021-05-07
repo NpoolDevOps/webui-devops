@@ -58,7 +58,7 @@ module.exports = {
           label: this.$t('message.en'),
           value: 1
         }
-      ]
+      ],
     }
   },
 

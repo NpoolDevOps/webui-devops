@@ -1,10 +1,11 @@
 <template>
-<span>详细信息</span>
+  <tree-miner-chart></tree-miner-chart>
 </template>
 
 <script>
+module.exports = {
+  components: {
+    TreeMinerChart: httpVueLoader('html/tool/Echarts/TreeMinerChart.vue'),
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
