@@ -5,7 +5,7 @@
 <script>
 module.exports = {
   components: {
-    TreeMinerChart: httpVueLoader('html/tool/Echarts/TreeMinerChart.vue'),
+    TreeMinerChart: httpVueLoader('../tool/Echarts/TreeMinerChart.vue'),
   }
 }
 </script>
