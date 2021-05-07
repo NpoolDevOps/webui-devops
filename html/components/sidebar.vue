@@ -9,7 +9,8 @@
       <el-submenu v-for="(submenu2, index2) in submenu1.submenus" :key="index2" :index="index1 + indexSeparator + index2">
         <span slot="title">{{ $t(submenu2.title) }}</span>
         <el-menu-item v-for="(submenu3, index3) in submenu2.submenus" :key="index3" :index="index1 + indexSeparator + index2 + indexSeparator + index3">
-          {{ $t(submenu3.title) }}
+          <span v-if="submenu2.title === 'sideBar.group1'">{{ $t(submenu3.title) }}</span>
+          <span v-else>{{submenu3.title}}</span>
         </el-menu-item>
       </el-submenu>
     </el-submenu>
