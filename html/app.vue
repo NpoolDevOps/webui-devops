@@ -56,6 +56,7 @@ module.exports = {
 }
 
 #miit-beian {
+  height: 20px;
   position: fixed;
   bottom: 0;
   right: 50%;
@@ -65,6 +66,12 @@ module.exports = {
 #miit-beian a {
   color: grey;
   font-size: 12px;
+}
+
+#miit-beian img {
+  width: 16px;
+  height: 16px;
+  padding-top: 3px;
 }
 
 #miit-beian a:link {
