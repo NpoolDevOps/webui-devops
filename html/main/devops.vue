@@ -1,7 +1,14 @@
 <template>
 <div class="devops" v-if="isShow">
-  <devops-panel-list class="devops" :send-devices="devices" :send-miner-devices="minerDevices"></devops-panel-list>
-  <devops-all-list class="devops" :send-miner-devices="minerDevices"></devops-all-list>
+  <devops-panel-list 
+    class="devops" 
+    :send-devices="devices" 
+    :send-miner-devices="minerDevices"
+  ></devops-panel-list>
+  <devops-all-list 
+    class="devops" 
+    :send-miner-devices="minerDevices"
+  ></devops-all-list>
 </div>
 </template>
 

@@ -1,31 +1,73 @@
 <template>
 <div class="header-row">
   <div>
-    <el-button class="hamburger-icon header-line-height" :icon="headerBreadIcon" @click="onHeaderIconClick">
+    <el-button 
+      class="hamburger-icon header-line-height" 
+      :icon="headerBreadIcon" 
+      @click="onHeaderIconClick"
+    >
     </el-button>
   </div>
 
   <div>
     <el-breadcrumb class="breadcrumb-style">
-      <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
-        <span v-if="index < 2">{{ $t(item.title) }}</span>
-        <span v-else-if="item.title === 'sideBar.option1' || item.title === 'sideBar.option2'">{{$t(item.title)}}</span>
-        <span v-else>{{item.title}}</span>
+      <el-breadcrumb-item
+        class="header-line-height" 
+        v-for="(item, index) in parameter.items" 
+        :key="index" 
+        :to="{ path: item.path }"
+      >
+        <el-button
+          @click="sendToSidebar(item)" 
+          type="text" 
+          style="color: black;" 
+          v-if="index < 2"
+        >
+          {{ $t(item.title) }}
+        </el-button>
+        <el-button
+          @click="sendToSidebar(item)" 
+          type="text" 
+          style="color: black;" 
+          v-else-if="item.title === 'sideBar.option1' || item.title === 'sideBar.option2'"
+        >
+          {{$t(item.title)}}
+        </el-button>
+        <el-button 
+          @click="sendToSidebar(item)" 
+          type="text" 
+          style="color: black;" 
+          v-else
+        >
+          {{item.title}}
+        </el-button>
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 
   <div class="right-menu">
     <template>
-      <screenfull id="screenfull" class="right-menu-item" />
+      <screenfull 
+        id="screenfull" 
+        class="right-menu-item" />
     </template>
 
-    <el-dropdown class="right-menu-item" trigger="click" @command="changeLanguage">
+    <el-dropdown 
+      class="right-menu-item" 
+      trigger="click" 
+      @command="changeLanguage"
+    >
       <div>
         <i class="el-icon-s-tools"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item :command="lang.value" v-for="lang in langs" :key="lang.value">{{lang.label}}</el-dropdown-item>
+        <el-dropdown-item 
+          :command="lang.value" 
+          v-for="lang in langs" 
+          :key="lang.value"
+        >
+          {{lang.label}}
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
 
@@ -80,6 +122,11 @@ module.exports = {
   },
 
   methods: {
+    sendToSidebar: function(item){
+      constants.EventBus.$emit('on-menu-selected', item.param);
+      console.log('the path is: ', item.param);
+    },
+
     onHeaderIconClick: function () {
       this.$emit("on-header-icon-click");
       this.collpased = !this.collpased;

@@ -1,14 +1,35 @@
 <template>
 <div>
-  <el-menu class="el-menu-vertical" text-color="#bfcbd9" active-text-color="#20a0ff" background-color="#324157" :default-active="defaultActiveMenuIndex" :collapse="collapsed" @select="onMenuSelected" router>
-    <el-submenu v-for="(submenu1, index1) in menus" :key="index1" :index='index1'>
+  <el-menu 
+    class="el-menu-vertical" 
+    text-color="#bfcbd9" 
+    active-text-color="#20a0ff" 
+    background-color="#324157" 
+    :default-active="defaultActiveMenuIndex" 
+    :collapse="collapsed" 
+    @select="onMenuSelected" 
+    router
+  >
+    <el-submenu 
+      v-for="(submenu1, index1) in menus" 
+      :key="index1" 
+      :index='index1'
+    >
       <template slot="title">
         <i :class="submenu1.icon"></i>
         <span slot="title">{{ $t(submenu1.title) }}</span>
       </template>
-      <el-submenu v-for="(submenu2, index2) in submenu1.submenus" :key="index2" :index="index1 + indexSeparator + index2">
+      <el-submenu 
+        v-for="(submenu2, index2) in submenu1.submenus" 
+        :key="index2" 
+        :index="index1 + indexSeparator + index2"
+      >
         <span slot="title">{{ $t(submenu2.title) }}</span>
-        <el-menu-item v-for="(submenu3, index3) in submenu2.submenus" :key="index3" :index="index1 + indexSeparator + index2 + indexSeparator + index3">
+        <el-menu-item 
+          v-for="(submenu3, index3) in submenu2.submenus" 
+          :key="index3" 
+          :index="index1 + indexSeparator + index2 + indexSeparator + index3"
+        >
           <span v-if="submenu2.title === 'sideBar.group1'">{{ $t(submenu3.title) }}</span>
           <span v-else>{{submenu3.title}}</span>
         </el-menu-item>
@@ -77,6 +98,7 @@ module.exports = {
   },
   methods: {
     onMenuSelected: function (index) {
+      var self = this;
       idxs = index.split(this.indexSeparator);
       var items = [];
       if (0 < idxs.length) {
@@ -84,7 +106,7 @@ module.exports = {
         items.push({
           title: menu.title,
           path: menu.path,
-          param: menu.param,
+          param: idxs[0],
         });
       }
       if (1 < idxs.length) {
@@ -92,7 +114,7 @@ module.exports = {
         items.push({
           title: menu.title,
           path: menu.path,
-          param: menu.param,
+          param: idxs[0] + self.indexSeparator + idxs[1],
         });
       }
       if (2 < idxs.length) {
@@ -100,10 +122,10 @@ module.exports = {
         items.push({
           title: menu.title,
           path: '/' + index,
-          param: menu.param,
+          param: idxs[0] + self.indexSeparator + idxs[1] + self.indexSeparator + idxs[2],
         });
       }
-      this.$emit('on-menu-switched', {
+      this.$emit("on-menu-switched", {
         items: items,
       });
     },
@@ -124,6 +146,7 @@ module.exports = {
   },
   created: function () {
     constants.EventBus.$on('on-menu-item-updated', this.onMenuItemUpdated);
+    constants.EventBus.$on('on-menu-selected', this.onMenuSelected);
   },
   mounted: function () {
     this.onMenuSelected(this.defaultActiveMenuIndex);

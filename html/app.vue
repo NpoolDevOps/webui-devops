@@ -2,11 +2,18 @@
 <div class="app-main">
   <el-row type="flex">
     <div class="el-col">
-      <mysidebar :collapsed="sidebarCollapsed" @on-menu-switched="onMenuSwitched">
+      <mysidebar 
+        :collapsed="sidebarCollapsed" 
+        @on-menu-switched="onMenuSwitched"
+      >
       </mysidebar>
     </div>
     <el-col>
-      <myheader @on-header-icon-click="onHeaderIconClick" :collapsed="sidebarCollapsed" :parameter="menuParam">
+      <myheader 
+        @on-header-icon-click="onHeaderIconClick" 
+        :collapsed="sidebarCollapsed" 
+        :parameter="menuParam"
+      >
       </myheader>
       <router-view></router-view>
     </el-col>
