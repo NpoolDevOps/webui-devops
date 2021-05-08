@@ -120,13 +120,16 @@ module.exports = {
             }
           });
 
-          var timeUpdateDeviceInfo = setTimeout(() => {
-            self.$emit('update_device_info');
-          }, 1000);
+          this.$emit('update_device_info');
+          this.$emit('update_menu');
 
-          var timeUpdateMenu = setTimeout(() => {
-            self.$emit("update_menu")
-          }, 1000);
+          // var timeUpdateDeviceInfo = setTimeout(() => {
+          //   self.$emit('update_device_info');
+          // }, 1000);
+
+          // var timeUpdateMenu = setTimeout(() => {
+          //   self.$emit("update_menu")
+          // }, 1000);
 
           let time = 5;
           self.deviceUpdater = setInterval(function () {
