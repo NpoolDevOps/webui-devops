@@ -120,8 +120,8 @@ module.exports = {
             }
           });
 
-          this.$emit('update_device_info');
-          this.$emit('update_menu');
+          self.$emit('update_device_info');
+          self.$emit('update_menu');
 
           // var timeUpdateDeviceInfo = setTimeout(() => {
           //   self.$emit('update_device_info');
