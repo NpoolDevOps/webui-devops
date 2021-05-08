@@ -8,7 +8,9 @@
   <div>
     <el-breadcrumb class="breadcrumb-style">
       <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
-        {{ $t(item.title) }}
+        <span v-if="index < 2">{{ $t(item.title) }}</span>
+        <span v-else-if="item.title === 'sideBar.option1' || item.title === 'sideBar.option2'">{{$t(item.title)}}</span>
+        <span v-else>{{item.title}}</span>
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
