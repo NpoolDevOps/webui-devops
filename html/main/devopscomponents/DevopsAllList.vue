@@ -26,7 +26,7 @@
               <pie-chart-power class="pie-chart" :send-miner-device='device.device' :send-miner-info='device.info' v-if="name2 === 'getMinerPower'"></pie-chart-power>
             </div>
           </el-col>
-          <el-col :span="12"  class="info-display">
+          <el-col :span="12" class="info-display">
             <div>
               <span class="title-font-style ">{{$t(`minerInfo[${parseInt(index2)}]`)}}</span>
               <div v-for="(value3, name3, index3) in value2" class="card-content">
@@ -63,8 +63,8 @@ module.exports = {
     }
   },
 
-   data(){
-    return{
+  data() {
+    return {
       cardMinerDevices: this.sendMinerDevices,
     }
   },
@@ -73,10 +73,10 @@ module.exports = {
     sendMinerDevices: {
       immediate: true,
       deep: true,
-      handler: function(newValue, oldValue){
+      handler: function (newValue, oldValue) {
         this.cardMinerDevices = newValue;
       },
-      
+
     }
   },
 
@@ -85,7 +85,7 @@ module.exports = {
       this.$router.push(a.currentTarget.id);
     },
   },
-    
+
 };
 </script>
 
@@ -120,7 +120,7 @@ module.exports = {
 .title-btn {
   padding: 0;
   font-size: 18px;
-  
+
   display: inline-block;
 }
 

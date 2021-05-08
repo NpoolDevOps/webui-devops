@@ -2,15 +2,15 @@
 <div class="header-row">
   <div>
     <el-button class="hamburger-icon header-line-height" :icon="headerBreadIcon" @click="onHeaderIconClick">
-  </el-button>
+    </el-button>
   </div>
 
   <div>
     <el-breadcrumb class="breadcrumb-style">
-    <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
-      {{ $t(item.title) }}
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+      <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
+        {{ $t(item.title) }}
+      </el-breadcrumb-item>
+    </el-breadcrumb>
   </div>
 
   <div class="right-menu">
@@ -96,7 +96,7 @@ module.exports = {
       }
     },
 
-    async logout() {
+    logout: function () {
       alert("log out successfully!");
     }
   },

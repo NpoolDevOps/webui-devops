@@ -122,13 +122,13 @@ module.exports = {
       }
     },
   },
-  created() {
+  created: function () {
     constants.EventBus.$on('on-menu-item-updated', this.onMenuItemUpdated);
   },
-  mounted() {
+  mounted: function () {
     this.onMenuSelected(this.defaultActiveMenuIndex);
   },
-  beforeDestroy() {
+  beforeDestroy: function () {
     constants.EventBus.$off('on-menu-item-updated');
   },
 };

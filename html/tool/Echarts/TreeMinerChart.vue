@@ -9,7 +9,7 @@ module.exports = {
   name: "eCharts",
   data() {
     return {
-      treedata: [{ //一定一定要注意这里有[]
+      treedata: [{
         name: '本科',
         children: [{
             name: '考研',
@@ -86,8 +86,7 @@ module.exports = {
     });
   },
   methods: {
-    showChart() {
-      // 基于准备好的dom，初始化echarts实例
+    showChart: function () {
       var myChart = echarts.init(document.getElementById('treeChart'));
       let self = this;
       this.option.series[0].data = this.treedata;
@@ -100,9 +99,13 @@ module.exports = {
           };
         }
       });
-
-      // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(self.option);
+    },
+
+    clickLable: function (param) {
+      if (param.type === 'click') {
+        console.log('param.name: ', param.name);
+      }
     }
   }
 }

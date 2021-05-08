@@ -1,5 +1,5 @@
 <template>
-  <tree-miner-chart></tree-miner-chart>
+<tree-miner-chart></tree-miner-chart>
 </template>
 
 <script>

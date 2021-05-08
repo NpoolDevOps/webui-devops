@@ -1,45 +1,45 @@
 <template>
-  <div>
-    <i :class="isFullscreen?'el-icon-zoom-out':'el-icon-zoom-in'" @click="click" />
-  </div>
+<div>
+  <i :class="isFullscreen?'el-icon-zoom-out':'el-icon-zoom-in'" @click="click" />
+</div>
 </template>
 
 <script>
-module.exports={
+module.exports = {
   name: 'Screenfull',
   data() {
     return {
-      isFullscreen: false
+      isFullscreen: false,
     }
   },
-  mounted() {
-    this.init()
+  mounted: function () {
+    this.init();
   },
-  beforeDestroy() {
-    this.destroy()
+  beforeDestroy: function () {
+    this.destroy();
   },
   methods: {
-    click: function(){
+    click: function () {
       if (!screenfull.isEnabled) {
         this.$message({
           message: 'you browser can not work',
-          type: 'warning'
+          type: 'warning',
         })
-        return false
+        return false;
       }
-      screenfull.toggle()
+      screenfull.toggle();
     },
-    change: function(){
-      this.isFullscreen = screenfull.isFullscreen
+    change: function () {
+      this.isFullscreen = screenfull.isFullscreen;
     },
-    init: function(){
+    init: function () {
       if (screenfull.isEnabled) {
-        screenfull.on('change', this.change)
+        screenfull.on('change', this.change);
       }
     },
-    destroy: function(){
+    destroy: function () {
       if (screenfull.isEnabled) {
-        screenfull.off('change', this.change)
+        screenfull.off('change', this.change);
       }
     }
   }
