@@ -35,7 +35,7 @@
         </el-menu-item>
       </el-submenu>
     </el-submenu>
-    <el-menu-item index="100">
+    <el-menu-item index="main/setting">
       <i class="el-icon-location"></i>
       <span slot="title">{{$t('sideBar.settings')}}</span>
     </el-menu-item>
@@ -98,37 +98,49 @@ module.exports = {
   },
   methods: {
     onMenuSelected: function (index) {
+      console.log('index', index);
       var self = this;
-      idxs = index.split(this.indexSeparator);
       var items = [];
-      if (0 < idxs.length) {
-        let menu = this.menus[idxs[0]];
+      if (index === 'main/setting') {
         items.push({
-          title: menu.title,
-          path: menu.path,
-          param: idxs[0],
-        });
-      }
-      if (1 < idxs.length) {
-        let menu = this.menus[idxs[0]].submenus[idxs[1]];
-        items.push({
-          title: menu.title,
-          path: menu.path,
-          param: idxs[0] + self.indexSeparator + idxs[1],
-        });
-      }
-      if (2 < idxs.length) {
-        let menu = this.menus[idxs[0]].submenus[idxs[1]].submenus[idxs[2]];
-        items.push({
-          title: menu.title,
+          title: 'sideBar.settings',
           path: '/' + index,
-          param: idxs[0] + self.indexSeparator + idxs[1] + self.indexSeparator + idxs[2],
-        });
+          param: index,
+        })
       }
+       else {
+        let idxs = index.split('-');
+        if (0 < idxs.length) {
+          let menu = self.menus[idxs[0]];
+          items.push({
+            title: menu.title,
+            path: menu.path,
+            param: idxs[0],
+          });
+        }
+        if (1 < idxs.length) {
+          let menu = self.menus[idxs[0]].submenus[idxs[1]];
+          items.push({
+            title: menu.title,
+            path: menu.path,
+            param: idxs[0] + self.indexSeparator + idxs[1],
+          });
+        }
+        if (2 < idxs.length) {
+          let menu = self.menus[idxs[0]].submenus[idxs[1]].submenus[idxs[2]];
+          items.push({
+            title: menu.title,
+            path: '/' + index,
+            param: idxs[0] + self.indexSeparator + idxs[1] + self.indexSeparator + idxs[2],
+          });
+        }
+      }
+
       this.$emit("on-menu-switched", {
         items: items,
       });
     },
+    
     onMenuItemUpdated: function (menu) {
       var myMenus = this.menus.map((menu) => menu);
       for (let i = 0; i < myMenus.length; i++) {
