@@ -88,6 +88,7 @@ module.exports = {
   methods: {
     showChart: function () {
       var myChart = echarts.init(document.getElementById('treeChart'));
+      myChart.on('click', this.clickLable);
       let self = this;
       this.option.series[0].data = this.treedata;
 
