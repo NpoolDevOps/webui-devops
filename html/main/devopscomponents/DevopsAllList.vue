@@ -5,7 +5,7 @@
       <el-card class="card-list-style" shadow="hover">
         <div slot="header" class="card-title">
           <el-button 
-            :id="device.device.pathIndex" 
+            :id="'/device' + device.device.pathIndex" 
             type="text" class="title-btn" 
             @click="goToDetail($event)"
           >
@@ -112,9 +112,6 @@ module.exports = {
     goToDetail: function (a) {
       var index = a.currentTarget.id;
       this.$router.push(index);
-      var arr = index.split('');
-      arr.shift();
-      index = arr.join('');
       constants.EventBus.$emit('on-menu-selected', index);
     },
   },
