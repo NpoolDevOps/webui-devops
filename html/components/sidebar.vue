@@ -126,7 +126,7 @@ module.exports = {
       }
        else {
         var arr = index.split("/");
-        let newIndex = arr[2];
+        let newIndex = arr[1];
         this.$route.params.index = newIndex;
         let idxs = newIndex.split("-");
         if (0 < idxs.length) {
