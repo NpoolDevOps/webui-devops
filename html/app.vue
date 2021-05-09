@@ -31,8 +31,8 @@
 <script>
 module.exports = {
   components: {
-    mysidebar: httpVueLoader("components/sidebar.vue"),
-    myheader: httpVueLoader("components/header.vue"),
+    mysidebar: httpVueLoader("/components/sidebar.vue"),
+    myheader: httpVueLoader("/components/header.vue"),
   },
   data() {
     return {
