@@ -37,6 +37,7 @@ const en  = new Object ({
     },
 
     sideBar: {
+        home: 'Home',
         settings: 'Settings',
         oc: 'Operations Console',
         minerList: 'Miner List',

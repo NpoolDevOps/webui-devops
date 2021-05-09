@@ -11,6 +11,11 @@
 
     <div>
       <el-breadcrumb class="breadcrumb-style">
+        <el-breadcrumb-item class="header-line-height" :to="{ path: '/' }">
+          <el-button type="text" @click="goToHome" style="color: black">{{
+            $t("sideBar.home")
+          }}</el-button>
+        </el-breadcrumb-item>
         <el-breadcrumb-item
           class="header-line-height"
           v-for="(item, index) in parameter.items"
@@ -124,9 +129,12 @@ module.exports = {
   },
 
   methods: {
+    goToHome: function () {
+      constants.EventBus.$emit("on-menu-selected", "0");
+    },
+
     sendToSidebar: function (item) {
       constants.EventBus.$emit("on-menu-selected", item.param);
-      console.log("the path is: ", item.param);
     },
 
     onHeaderIconClick: function () {

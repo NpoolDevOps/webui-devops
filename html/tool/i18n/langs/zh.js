@@ -37,6 +37,7 @@ const zh  = new Object({
     },
 
     sideBar: {
+        home: '首页',
         settings: '设置',
         oc: '运维控制台',
         minerList: '矿工列表',

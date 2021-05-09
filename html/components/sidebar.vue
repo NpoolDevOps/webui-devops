@@ -109,6 +109,7 @@ module.exports = {
     onMenuSelected: function (index) {
       var self = this;
       var items = [];
+      
       if (index === "0") {
         let menu = self.menus[0];
         items.push({
@@ -122,7 +123,8 @@ module.exports = {
           path: index,
           param: index,
         });
-      } else {
+      }
+       else {
         var arr = index.split("/");
         let newIndex = arr[2];
         this.$route.params.index = newIndex;
