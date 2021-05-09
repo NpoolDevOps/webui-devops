@@ -11,7 +11,7 @@ const routes = [
             },
         ]
     },
-    { path: '/:index', name: 'device', component: devopsdt },
+    { path: '/device/:index', name: 'device', component: devopsdt },
     { path: '/user/setting', name: 'setting', component: setting },
 ]
 const router = new VueRouter({

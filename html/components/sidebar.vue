@@ -13,7 +13,7 @@
       <el-submenu
         v-for="(submenu1, index1) in menus"
         :key="index1"
-        :index="'/' + index1"
+        :index="'/device/' + index1"
       >
         <template slot="title">
           <i :class="submenu1.icon"></i>
@@ -22,14 +22,14 @@
         <el-submenu
           v-for="(submenu2, index2) in submenu1.submenus"
           :key="index2"
-          :index="'/' + index1 + indexSeparator + index2"
+          :index="'/device/' + index1 + indexSeparator + index2"
         >
           <span slot="title">{{ $t(submenu2.title) }}</span>
           <el-menu-item
             v-for="(submenu3, index3) in submenu2.submenus"
             :key="index3"
             :index="
-              '/' + index1 + indexSeparator + index2 + indexSeparator + index3
+              '/device/' + index1 + indexSeparator + index2 + indexSeparator + index3
             "
           >
             <span v-if="submenu2.title === 'sideBar.group1'">{{
@@ -124,7 +124,7 @@ module.exports = {
         });
       } else {
         var arr = index.split("/");
-        let newIndex = arr[1];
+        let newIndex = arr[2];
         this.$route.params.index = newIndex;
         let idxs = newIndex.split("-");
         if (0 < idxs.length) {
@@ -132,7 +132,7 @@ module.exports = {
           items.push({
             title: menu.title,
             path: menu.path,
-            param: "/" + idxs[0],
+            param: "/device/" + idxs[0],
           });
         }
         if (1 < idxs.length) {
@@ -140,7 +140,7 @@ module.exports = {
           items.push({
             title: menu.title,
             path: menu.path,
-            param: "/" + idxs[0] + self.indexSeparator + idxs[1],
+            param: "/device/" + idxs[0] + self.indexSeparator + idxs[1],
           });
         }
         if (2 < idxs.length) {
@@ -149,7 +149,7 @@ module.exports = {
             title: menu.title,
             path: index,
             param:
-              "/" +
+              "/device/" +
               idxs[0] +
               self.indexSeparator +
               idxs[1] +
