@@ -10,7 +10,7 @@
         <el-card class="card-list-style" shadow="hover">
           <div slot="header">
             <el-button
-              :id="device.device.pathIndex"
+              :id="'/device/' + device.device.pathIndex"
               type="text"
               class="title-btn"
               @click="goToDetail($event)"
