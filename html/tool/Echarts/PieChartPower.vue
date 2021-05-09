@@ -77,9 +77,6 @@ module.exports = {
 
       //option of power chart
       var powerOption = {
-        title: {
-          text: 'Power',
-        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)',
