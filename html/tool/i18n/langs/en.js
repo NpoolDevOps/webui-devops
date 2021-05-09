@@ -1,11 +1,11 @@
-const en  = new Object ({
+const en = new Object({
     message: {
         zh: 'Chinese',
         en: 'English',
         userCenter: 'User Center',
         logOut: 'Log Out',
-    }, 
-    
+    },
+
     panel: [
         'miner number',
         'equipment number',
@@ -25,8 +25,19 @@ const en  = new Object ({
     minerInfo: ['Miner Fee', 'Miner Power'],
 
     getMiner: {
-        getMinerFee:['Miner Balance', 'Miner Available', 'Miner Vesting', 'Miner Precommit Deposit', 'Miner Initial Pledge'],
-        getMinerPower: ['Miner Faulty Power', 'Miner Power', 'Miner Proving Power', 'Miner Committed Power'],
+        getMinerFee: {
+            miner_balance: 'Miner Balance',
+            miner_available: 'Miner Available',
+            miner_vesting: 'Miner Vesting',
+            miner_precommit_deposit: 'Miner Precommit Deposit',
+            miner_initial_pledge: 'Miner Initial Pledge',
+        },
+        getMinerPower: {
+            miner_faulty_power: 'Miner Faulty Power',
+            miner_power: 'Miner Power',
+            miner_proving_power: 'Miner Proving Power',
+            miner_committed_power: 'Miner Committed Power',
+        }
     },
 
     charts: {
@@ -49,5 +60,5 @@ const en  = new Object ({
         option2: 'Option 2',
 
     },
-    
- })
+
+})

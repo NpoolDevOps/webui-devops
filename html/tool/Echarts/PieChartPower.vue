@@ -1,5 +1,5 @@
 <template>
-<div :id="cardIDPower" style="width: 100%; height: 160px;"></div>
+<div :id="cardIDPower" style="width: 100%; height: 100px;"></div>
 </template>
 
 <script>
@@ -89,7 +89,7 @@ module.exports = {
           name: 'power',
           type: 'pie',
           // roseType: 'radius',
-          radius: [10, 50],
+          radius: [5, 40],
           label: {
             normal: {
               position: 'inner',

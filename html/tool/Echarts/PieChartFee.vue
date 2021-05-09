@@ -1,5 +1,5 @@
 <template>
-<div :id="cardIDFee" style="width: 100%; height: 160px;"></div>
+<div :id="cardIDFee" style="width: 100%; height: 100px;"></div>
 </template>
 
 <script>
@@ -77,9 +77,6 @@ module.exports = {
 
       //option of fee chart
       var feeOption = {
-        title: {
-          text: 'Fee',
-        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)',
@@ -89,7 +86,7 @@ module.exports = {
           name: 'fee',
           type: 'pie',
           // roseType: 'radius',
-          radius: [10, 50],
+          radius: [5, 40],
           label: {
             normal: {
               position: 'inner',

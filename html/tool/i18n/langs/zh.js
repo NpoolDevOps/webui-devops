@@ -1,11 +1,11 @@
-const zh  = new Object({
+const zh = new Object({
     message: {
         zh: '中文',
         en: '英文',
         userCenter: '个人中心',
         logOut: '退出',
     },
-    
+
     panel: [
         '矿工数',
         '设备',
@@ -25,8 +25,19 @@ const zh  = new Object({
     minerInfo: ['矿工金额', '矿工算力'],
 
     getMiner: {
-        getMinerFee:['余额', '可提现金额', '利益', '预付定金', '初始抵押'],
-        getMinerPower: ['错误算力', '算力', '证实算力', '承诺算力'],
+        getMinerFee: {
+            miner_balance: '总金额',
+            miner_available: '余额',
+            miner_vesting: '利益',
+            miner_precommit_deposit: '预付定金',
+            miner_initial_pledge: '初始抵押',
+        },
+        getMinerPower: {
+            miner_faulty_power: '错误算力',
+            miner_power: '总算力',
+            miner_proving_power: '证实算力',
+            miner_committed_power: '承诺算力',
+        }
     },
 
     charts: {
