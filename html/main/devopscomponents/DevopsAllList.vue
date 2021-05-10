@@ -186,6 +186,37 @@ module.exports = {
   display: inline-block;
 }
 
+.title-btn:before,.title-btn:after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-bottom: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.title-btn:before {
+  top: 0;
+  left: 0;
+  transition: border-color 0s ease-in 0.8s, width 0.2s ease-in 0.6s,
+    height 0.2s ease-in 0.4s;
+}
+.title-btn:after {
+  right: 0;
+  bottom: 0;
+  transition: border-color 0s ease-in 0.4s, width 0.2s ease-in 0.2s,
+    height 0.2s ease-in;
+}
+
+.title-btn:hover:after {
+  width: 100%;
+  height: 100%;
+  transition: border-color 0s ease-in 0.4s, width 0.2s ease-in 0.4s,
+    height 0.3s ease-in 0.6s;
+  border-bottom-color: #67c23a;
+  
+}
+
 .reminder-light {
   float: right;
   display: inline;
