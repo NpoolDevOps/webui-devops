@@ -85,7 +85,7 @@
                 <span class="card-content">{{
                   device.info.getMinerPower.miner_power
                 }}</span
-                >/<span class="card-content faulty-color">{{
+                >/<span class="card-content faulty-color" style="padding: 0px;">{{
                   device.info.getMinerPower.miner_faulty_power
                 }}</span>
               </div>
