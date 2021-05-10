@@ -105,6 +105,7 @@ module.exports = {
 
     clickLable: function (param) {
       if (param.type === 'click') {
+        this.$router.push('/device/detail');
         console.log('param.name: ', param.name);
       }
     }

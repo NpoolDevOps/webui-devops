@@ -1,6 +1,7 @@
 const devops = httpVueLoader('/main/devops.vue')
 const devopsdt = httpVueLoader('/main/device-detail/devopsdt.vue')
 const setting = httpVueLoader('/main/setting.vue')
+const deviceDetail = httpVueLoader('/main/device-detail/devopsDeviceDetail.vue')
 const routes = [
     { path: '/', name: '/', component: devops, },
     {
@@ -13,6 +14,7 @@ const routes = [
     },
     { path: '/device/:index', name: 'device', component: devopsdt },
     { path: '/user/setting', name: 'setting', component: setting },
+    { path: '/device/detail', name:'deviceDetail', component: deviceDetail},
 ]
 const router = new VueRouter({
     routes: routes,
