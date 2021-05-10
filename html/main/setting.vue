@@ -42,6 +42,5 @@ module.exports = {
   color: gray;
   border-bottom: 2px solid gray;
   width: 100%;
-  margin-left: 50px;
 }
 </style>
