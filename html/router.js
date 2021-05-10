@@ -1,5 +1,5 @@
 const devops = httpVueLoader('/main/devops.vue')
-const devopsdt = httpVueLoader('/main/devopsdt.vue')
+const devopsdt = httpVueLoader('/main/device-detail/devopsdt.vue')
 const setting = httpVueLoader('/main/setting.vue')
 const routes = [
     { path: '/', name: '/', component: devops, },
