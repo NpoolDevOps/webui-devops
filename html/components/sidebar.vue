@@ -1,50 +1,29 @@
 <template>
-  <div>
-    <el-menu
-      class="el-menu-vertical"
-      text-color="#bfcbd9"
-      active-text-color="#20a0ff"
-      background-color="#324157"
-      :default-active="defaultActiveMenuIndex"
-      :collapse="collapsed"
-      @select="onMenuSelected"
-      router
-    >
-      <el-submenu
-        v-for="(submenu1, index1) in menus"
-        :key="index1"
-        :index="'/device/' + index1"
-      >
-        <template slot="title">
-          <i :class="submenu1.icon"></i>
-          <span slot="title">{{ $t(submenu1.title) }}</span>
-        </template>
-        <el-submenu
-          v-for="(submenu2, index2) in submenu1.submenus"
-          :key="index2"
-          :index="'/device/' + index1 + indexSeparator + index2"
-        >
-          <span slot="title">{{ $t(submenu2.title) }}</span>
-          <el-menu-item
-            v-for="(submenu3, index3) in submenu2.submenus"
-            :key="index3"
-            :index="
+<div>
+  <el-menu class="el-menu-vertical" text-color="#bfcbd9" active-text-color="#20a0ff" background-color="#324157" :default-active="defaultActiveMenuIndex" :collapse="collapsed" @select="onMenuSelected" router>
+    <el-submenu v-for="(submenu1, index1) in menus" :key="index1" :index="'/device/' + index1">
+      <template slot="title">
+        <i :class="submenu1.icon"></i>
+        <span slot="title">{{ $t(submenu1.title) }}</span>
+      </template>
+      <el-submenu v-for="(submenu2, index2) in submenu1.submenus" :key="index2" :index="'/device/' + index1 + indexSeparator + index2">
+        <span slot="title">{{ $t(submenu2.title) }}</span>
+        <el-menu-item v-for="(submenu3, index3) in submenu2.submenus" :key="index3" :index="
               '/device/' + index1 + indexSeparator + index2 + indexSeparator + index3
-            "
-          >
-            <span v-if="submenu2.title === 'sideBar.group1'">{{
+            ">
+          <span v-if="submenu2.title === 'sideBar.group1'">{{
               $t(submenu3.title)
             }}</span>
-            <span v-else>{{ submenu3.title }}</span>
-          </el-menu-item>
-        </el-submenu>
+          <span v-else>{{ submenu3.title }}</span>
+        </el-menu-item>
       </el-submenu>
-      <el-menu-item index="/user/setting">
-        <i class="el-icon-location"></i>
-        <span slot="title">{{ $t("sideBar.settings") }}</span>
-      </el-menu-item>
-    </el-menu>
-  </div>
+    </el-submenu>
+    <el-menu-item index="/user/setting">
+      <i class="el-icon-location"></i>
+      <span slot="title">{{ $t("sideBar.settings") }}</span>
+    </el-menu-item>
+  </el-menu>
+</div>
 </template>
 
 <script>
@@ -54,14 +33,12 @@ module.exports = {
       default: false,
     },
     menus: {
-      default: [
-        {
+      default: [{
           title: "sideBar.oc",
           icon: "el-icon-location",
           path: "/home",
           clazz: constants.MenuClassDevops,
-          submenus: [
-            {
+          submenus: [{
               title: "sideBar.minerList",
               path: "/home/miner",
               clazz: constants.MenuSubClassMinerDeviceList,
@@ -79,22 +56,19 @@ module.exports = {
           title: "sideBar.navigation2",
           icon: "el-icon-location",
           path: "/home",
-          submenus: [
-            {
-              title: "sideBar.group1",
-              path: "/group",
-              submenus: [
-                {
-                  title: "sideBar.option1",
-                  path: "/group/item",
-                },
-                {
-                  title: "sideBar.option2",
-                  path: "/group/item",
-                },
-              ],
-            },
-          ],
+          submenus: [{
+            title: "sideBar.group1",
+            path: "/group",
+            submenus: [{
+                title: "sideBar.option1",
+                path: "/group/item",
+              },
+              {
+                title: "sideBar.option2",
+                path: "/group/item",
+              },
+            ],
+          }, ],
         },
       ],
     },
@@ -109,7 +83,7 @@ module.exports = {
     onMenuSelected: function (index) {
       var self = this;
       var items = [];
-      
+
       if (index === "0") {
         let menu = self.menus[0];
         items.push({
@@ -123,8 +97,7 @@ module.exports = {
           path: index,
           param: index,
         });
-      }
-       else {
+      } else {
         var arr = index.split("/");
         let newIndex = arr[2];
         this.$route.params.index = newIndex;
@@ -150,8 +123,7 @@ module.exports = {
           items.push({
             title: menu.title,
             path: index,
-            param:
-              "/device/" +
+            param: "/device/" +
               idxs[0] +
               self.indexSeparator +
               idxs[1] +

@@ -1,11 +1,8 @@
 <template>
-  <div class="header-row">
+<div class="header-row">
+  <div class="left-menu">
     <div>
-      <el-button
-        class="hamburger-icon header-line-height"
-        :icon="headerBreadIcon"
-        @click="onHeaderIconClick"
-      >
+      <el-button class="hamburger-icon header-line-height" :icon="headerBreadIcon" @click="onHeaderIconClick">
       </el-button>
     </div>
 
@@ -16,80 +13,53 @@
             $t("sideBar.home")
           }}</el-button>
         </el-breadcrumb-item>
-        <el-breadcrumb-item
-          class="header-line-height"
-          v-for="(item, index) in parameter.items"
-          :key="index"
-          :to="{ path: item.path }"
-        >
-          <el-button
-            @click="sendToSidebar(item)"
-            type="text"
-            style="color: black"
-            v-if="index < 2"
-          >
+        <el-breadcrumb-item class="header-line-height" v-for="(item, index) in parameter.items" :key="index" :to="{ path: item.path }">
+          <el-button @click="sendToSidebar(item)" type="text" style="color: black" v-if="index < 2">
             {{ $t(item.title) }}
           </el-button>
-          <el-button
-            @click="sendToSidebar(item)"
-            type="text"
-            style="color: black"
-            v-else-if="
+          <el-button @click="sendToSidebar(item)" type="text" style="color: black" v-else-if="
               item.title === 'sideBar.option1' ||
               item.title === 'sideBar.option2'
-            "
-          >
+            ">
             {{ $t(item.title) }}
           </el-button>
-          <el-button
-            @click="sendToSidebar(item)"
-            type="text"
-            style="color: black"
-            v-else
-          >
+          <el-button @click="sendToSidebar(item)" type="text" style="color: black" v-else>
             {{ item.title }}
           </el-button>
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-
-    <div class="right-menu">
-      <template>
-        <screenfull id="screenfull" class="right-menu-item" />
-      </template>
-
-      <el-dropdown
-        class="right-menu-item"
-        trigger="click"
-        @command="changeLanguage"
-      >
-        <div>
-          <i class="el-icon-s-tools"></i>
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item
-            :command="lang.value"
-            v-for="lang in langs"
-            :key="lang.value"
-          >
-            {{ lang.label }}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-
-      <el-dropdown class="right-menu-item user-menu" trigger="click">
-        <div class="user-head">
-          <el-avatar class="user-head-img" size="medium"> user </el-avatar>
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display: block">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
   </div>
+
+  <div class="right-menu">
+    <template>
+      <screenfull id="screenfull" class="right-menu-item" />
+    </template>
+
+    <el-dropdown class="right-menu-item" trigger="click" @command="changeLanguage">
+      <div>
+        <i class="el-icon-s-tools"></i>
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item :command="lang.value" v-for="lang in langs" :key="lang.value">
+          {{ lang.label }}
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+
+    <el-dropdown class="right-menu-item user-menu" trigger="click">
+      <div class="user-head">
+        <el-avatar class="user-head-img" size="medium"> user </el-avatar>
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>个人中心</el-dropdown-item>
+        <el-dropdown-item divided @click.native="logout">
+          <span style="display: block">Log Out</span>
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </div>
+</div>
 </template>
 
 <script>
@@ -100,8 +70,7 @@ module.exports = {
 
   data() {
     return {
-      langs: [
-        {
+      langs: [{
           label: this.$t("message.zh"),
           value: 0,
         },
@@ -171,10 +140,17 @@ module.exports = {
   width: 100%;
   height: 50px;
   overflow: hidden;
-  position: relative;
   background-color: transparent;
   box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-menu {
+  padding-top: 5px;
+  width: 100%;
+  display: flex;
 }
 
 .header-line-height {
@@ -182,21 +158,18 @@ module.exports = {
 }
 
 .hamburger-icon {
-  float: left;
   width: 40px;
   height: 40px;
   border: none;
   padding: 0px;
 }
 
-.breadcrumb-style {
-  float: left;
-}
-
 .right-menu {
-  float: right;
+  display: flex;
+  justify-content: space-around;
   height: 100%;
   line-height: 50px;
+  margin-right: 10px;
 }
 
 .right-menu-item {
@@ -209,7 +182,6 @@ module.exports = {
 
 .user-head {
   height: 100%;
-  position: relative;
 }
 
 .user-head-img {

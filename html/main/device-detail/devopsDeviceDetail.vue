@@ -1,18 +1,19 @@
 <template>
 <div class="detail-card-style">
   <span class="title-style">device number</span>
+  
   <el-card class="card-style">
     <span>设备概览</span>
-    <div class="device-style">
-      <div class="div-device-fee">
-        <span>账户余额：10000</span><br />
-        <span>可用余额</span><br />
-        <span>扇区抵押</span><br />
+    <div class="device-style justify-div">
+      <div class="div-device-style device-font-style">
+        <span>账户余额：10000</span>
+        <span>可用余额</span>
+        <span>扇区抵押</span>
         <!--下方插入折线图直观展示fee变化-->
       </div>
 
-      <div class="div-device-power">
-        <span>有效算力</span><br />
+      <div class="div-device-style device-font-style">
+        <span>有效算力</span>
         <span>设备状态</span>
         <!--下方插入折线图直观展示power变化-->
       </div>
@@ -66,14 +67,20 @@ module.exports = {
   margin: 20px;
 }
 
-.div-device-fee {
-  box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1);
-  width: 750px;
+.device-font-style {
+  font-size: 14px;
 }
 
-.div-device-power {
+.justify-div {
+  justify-content: space-between;
+}
+
+.div-device-style {
+  padding: 10px;
   box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1);
   width: 750px;
-  margin-left: 60px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
 </style>

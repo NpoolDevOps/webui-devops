@@ -3,8 +3,10 @@
   <el-row gutter="20">
     <el-col span="7" class="card-margin" v-for="(device, index) in cardMinerDevices" :key="index">
       <el-card class="card-list-style" shadow="hover">
-        <div slot="header">
-          <el-button :id="'/device' + device.device.pathIndex" type="text" class="title-btn" @click="goToDetail($event)">{{ device.device.local_addr }}</el-button>
+        <div slot="header" class="header-positon">
+          <div class="header-button">
+            <el-button :id="'/device' + device.device.pathIndex" type="text" class="title-btn" @click="goToDetail($event)">{{ device.device.local_addr }}</el-button>
+          </div>
           <div class="reminder-light">
             <div class="outer">
               <div class="inner"></div>
@@ -120,6 +122,12 @@ module.exports = {
   border-bottom: none;
   box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.05);
   height: 50px;
+}
+
+.header-positon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .card-list-style {
