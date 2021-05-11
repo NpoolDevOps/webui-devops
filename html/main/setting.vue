@@ -28,7 +28,9 @@ module.exports = {
 </script>
 
 <style scoped>
-.card-style {
+.el-card__body {
+  display: flex;
+  flex-direction: column;
   margin: 10px 30px 0px 20px;
 }
 
