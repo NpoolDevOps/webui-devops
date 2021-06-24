@@ -1,42 +1,31 @@
 <template>
-  <div>
-    <el-menu
-      class="el-menu-vertical"
-      :default-active="defaultActiveMenuIndex"
-      :collapse="collapsed"
-      @select="onMenuSelected"
-    >
-      <el-submenu
-        v-for="(submenu1, index1) in menus"
-        :key="index1"
-        :index="index1"
-      >
-        <template slot="title">
-          <i :class="submenu1.icon"></i>
-          <span slot="title">{{ submenu1.title }}</span>
-        </template>
-        <el-submenu
-          v-for="(submenu2, index2) in submenu1.submenus"
-          :key="index2"
-          :index="index1 + indexSeparator + index2"
-        >
-          <span slot="title">{{ submenu2.title }}</span>
-          <el-menu-item
-            v-for="(submenu3, index3) in submenu2.submenus"
-            :key="index3"
-            :index="index1 + indexSeparator + index2 + indexSeparator + index3"
-          >
-            {{ submenu3.title }}
-          </el-menu-item>
-        </el-submenu>
+<div>
+  <el-menu class="el-menu-vertical" text-color="#bfcbd9" active-text-color="#20a0ff" background-color="#324157" :default-active="defaultActiveMenuIndex" :collapse="collapsed" @select="onMenuSelected" router>
+    <el-submenu v-for="(submenu1, index1) in menus" :key="index1" :index="'/device/' + index1">
+      <template slot="title">
+        <i :class="submenu1.icon"></i>
+        <span slot="title">{{ $t(submenu1.title) }}</span>
+      </template>
+      <el-submenu v-for="(submenu2, index2) in submenu1.submenus" :key="index2" :index="'/device/' + index1 + indexSeparator + index2">
+        <span slot="title">{{ $t(submenu2.title) }}</span>
+        <el-menu-item v-for="(submenu3, index3) in submenu2.submenus" :key="index3" :index="
+              '/device/' + index1 + indexSeparator + index2 + indexSeparator + index3
+            ">
+          <span v-if="submenu2.title === 'sideBar.group1'">{{
+              $t(submenu3.title)
+            }}</span>
+          <span v-else>{{ submenu3.title }}</span>
+        </el-menu-item>
       </el-submenu>
-      <el-menu-item index="100">
-         <i class="el-icon-location"></i>
-        <span slot="title">設置</span>
-      </el-menu-item>
-    </el-menu>
-  </div>
+    </el-submenu>
+    <el-menu-item index="/user/setting">
+      <i class="el-icon-location"></i>
+      <span slot="title">{{ $t("sideBar.settings") }}</span>
+    </el-menu-item>
+  </el-menu>
+</div>
 </template>
+
 <script>
 module.exports = {
   props: {
@@ -44,96 +33,140 @@ module.exports = {
       default: false,
     },
     menus: {
-      default: [
-        { 
-          title: '運維控制檯', icon: 'el-icon-location', path: '/', clazz: constants.MenuClassDevops,
-          submenus: [
-            { 
-              title: '礦工列表', path: '/group', clazz: constants.MenuSubClassDeviceList,
+      default: [{
+          title: "sideBar.oc",
+          icon: "el-icon-location",
+          path: "/home",
+          clazz: constants.MenuClassDevops,
+          submenus: [{
+              title: "sideBar.minerList",
+              path: "/home/miner",
+              clazz: constants.MenuSubClassMinerDeviceList,
               submenus: [],
-            }
-          ]
-        }, {
-          title: '導航二', icon: 'el-icon-location', path: '/',
-          submenus: [
+            },
             {
-              title: '分組一', path: '/group',
-              submenus: [
-                { title: '選項一', path: '/group/item' },
-                { title: '選項二', path: '/group/item' }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+              title: "sideBar.gatewayList",
+              path: "/home",
+              clazz: constants.MenuSubClassGatewayDeviceList,
+              submenus: [],
+            },
+          ],
+        },
+        {
+          title: "sideBar.navigation2",
+          icon: "el-icon-location",
+          path: "/home",
+          submenus: [{
+            title: "sideBar.group1",
+            path: "/group",
+            submenus: [{
+                title: "sideBar.option1",
+                path: "/group/item",
+              },
+              {
+                title: "sideBar.option2",
+                path: "/group/item",
+              },
+            ],
+          }, ],
+        },
+      ],
+    },
   },
   data() {
     return {
-      indexSeparator: '-',
-      defaultActiveMenuIndex: '0',
-    }
+      indexSeparator: "-",
+      defaultActiveMenuIndex: "0",
+    };
   },
   methods: {
-    onMenuSelected: function(index) {
-      idxs = index.split(this.indexSeparator)
-      var items = []
-      if (0 < idxs.length) {
-        let menu = this.menus[idxs[0]]
+    onMenuSelected: function (index) {
+      var self = this;
+      var items = [];
+
+      if (index === "0") {
+        let menu = self.menus[0];
         items.push({
           title: menu.title,
           path: menu.path,
-          param: menu.param,
-        })
-      }
-      if (1 < idxs.length) {
-        let menu = this.menus[idxs[0]].submenus[idxs[1]]
+          param: index,
+        });
+      } else if (index === "/user/setting") {
         items.push({
-          title: menu.title,
-          path: menu.path,
-          param: menu.param,
-        })
+          title: "sideBar.settings",
+          path: index,
+          param: index,
+        });
+      } else {
+        var arr = index.split("/");
+        let newIndex = arr[2];
+        this.$route.params.index = newIndex;
+        let idxs = newIndex.split("-");
+        if (0 < idxs.length) {
+          let menu = this.menus[idxs[0]];
+          items.push({
+            title: menu.title,
+            path: menu.path,
+            param: "/device/" + idxs[0],
+          });
+        }
+        if (1 < idxs.length) {
+          let menu = this.menus[idxs[0]].submenus[idxs[1]];
+          items.push({
+            title: menu.title,
+            path: menu.path,
+            param: "/device/" + idxs[0] + self.indexSeparator + idxs[1],
+          });
+        }
+        if (2 < idxs.length) {
+          let menu = this.menus[idxs[0]].submenus[idxs[1]].submenus[idxs[2]];
+          items.push({
+            title: menu.title,
+            path: index,
+            param: "/device/" +
+              idxs[0] +
+              self.indexSeparator +
+              idxs[1] +
+              self.indexSeparator +
+              idxs[2],
+          });
+        }
       }
-      if (2 < idxs.length) {
-        let menu = this.menus[idxs[0]].submenus[idxs[1]].submenus[idxs[2]]
-        items.push({
-          title: menu.title,
-          path: menu.path,
-          param: menu.param,
-        })
-      }
-      this.$emit('on-menu-switched', {
-        items: items
-      })
+      this.$emit("on-menu-switched", {
+        items: items,
+      });
     },
-    onMenuItemUpdated: function(menu) {
-      var myMenus = this.menus.map((menu) => menu)
+
+    onMenuItemUpdated: function (menu) {
+      var myMenus = this.menus.map((menu) => menu);
       for (let i = 0; i < myMenus.length; i++) {
         if (menu.clazz == myMenus[i].clazz) {
           for (let k = 0; k < myMenus[i].submenus.length; k++) {
             if (menu.subclazz == myMenus[i].submenus[k].clazz) {
-              myMenus[i].submenus[k].submenus = menu.menu.submenus
-              this.menus = myMenus
-              return
+              myMenus[i].submenus[k].submenus = menu.menu.submenus;
+              this.menus = myMenus;
+              return;
             }
           }
         }
       }
-    }
+    },
   },
-  created() {
-    constants.EventBus.$on('on-menu-item-updated', this.onMenuItemUpdated)
+  created: function () {
+    constants.EventBus.$on("on-menu-item-updated", this.onMenuItemUpdated);
+    constants.EventBus.$on("on-menu-selected", this.onMenuSelected);
   },
-  mounted() {
-    this.onMenuSelected(this.defaultActiveMenuIndex)
+  mounted: function () {
+    this.onMenuSelected(this.defaultActiveMenuIndex);
   },
-  beforeDestroy() {
-    constants.EventBus.$off('on-menu-item-updated')
-  }
-}
+  beforeDestroy: function () {
+    constants.EventBus.$off("on-menu-item-updated");
+  },
+};
 </script>
+
 <style scoped>
-  .el-menu-vertical:not(.el-menu--collapse) {
-    width: 200px;
-  }
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 200px;
+}
 </style>

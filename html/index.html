@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +13,14 @@
     <script src="https://unpkg.com/http-vue-loader"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+    <script src="./tool/screenfull/screenfull.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.0/dist/echarts.min.js"></script>
     <style>
-        html, body, #app {
-            width:  100%;
+        html,
+        body,
+        #app {
+            width: 100%;
             height: 100%;
             margin: 0;
         }
@@ -26,6 +32,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="components.js"></script>
     <script src="constants/consts.js"></script>
+    <script src="./tool/i18n/langs/en.js"></script>
+    <script src="./tool/i18n/langs/zh.js"></script>
     <div id="app">
         <app></app>
     </div>
