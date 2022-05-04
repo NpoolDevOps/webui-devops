@@ -73,6 +73,7 @@ module.exports = {
         data: {
           auth_code: authCode,
         },
+	timeout: 600000,
       })
         .then(function (response) {
           let resp = response.data;
